@@ -1,0 +1,388 @@
+/* ==================== Page « Cours » (/app/apprendre/:id) ==================== */
+
+.lesson-detail {
+  display: block;
+  max-width: var(--container);
+}
+
+/* ------------------------------ Fil d'Ariane ------------------------------ */
+.lesson-detail__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-subtle);
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.lesson-detail__breadcrumb-link {
+  color: var(--primary);
+  font-weight: var(--weight-bold, 700);
+  text-decoration: none;
+}
+
+.lesson-detail__breadcrumb-link:hover {
+  text-decoration: underline;
+}
+
+.lesson-detail__breadcrumb-current {
+  color: var(--text-muted);
+  max-width: 60ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --------------------------------- En-tête -------------------------------- */
+.lesson-detail__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.lesson-detail__emoji {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  flex: none;
+  font-size: var(--text-4xl);
+  border-radius: var(--radius-lg);
+  background: var(--surface-3);
+}
+
+.lesson-detail__header-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.lesson-detail__title {
+  font-family: var(--font-heading);
+  font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
+  line-height: 1.15;
+  color: var(--text);
+  margin: 0;
+}
+
+.lesson-detail__summary {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed, 1.65);
+  color: var(--text-muted);
+  margin: 0;
+  max-width: var(--measure, 68ch);
+}
+
+/* -------------------------- Progression de lecture ------------------------ */
+.lesson-detail__progress {
+  position: sticky;
+  top: var(--space-2);
+  z-index: 2;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-glass, var(--surface));
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-6);
+}
+
+/* ---------------------------------- Corps --------------------------------- */
+.lesson-detail__article {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.lesson-detail__section {
+  scroll-margin-top: var(--space-20);
+}
+
+.lesson-detail__section-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  line-height: 1.25;
+  color: var(--text);
+  margin: 0 0 var(--space-4);
+}
+
+.lesson-detail__paragraph {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed, 1.7);
+  color: var(--text-muted);
+  margin: 0 0 var(--space-4);
+  max-width: var(--measure, 72ch);
+}
+
+.lesson-detail__paragraph:last-of-type {
+  margin-bottom: 0;
+}
+
+/* ------------------------------- Points clés ------------------------------ */
+.lesson-detail__keypoints {
+  margin-top: var(--space-5);
+  padding: var(--space-5);
+  background: var(--warning-soft);
+  border-left: 4px solid var(--warning);
+  border-radius: var(--radius-md);
+}
+
+.lesson-detail__keypoints-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  color: var(--warning-soft-text);
+  margin-bottom: var(--space-3);
+}
+
+.lesson-detail__keypoints-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.lesson-detail__keypoints-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--warning-soft-text);
+  line-height: 1.5;
+}
+
+.lesson-detail__keypoints-list svg {
+  flex: none;
+  margin-top: 3px;
+}
+
+/* --------------------------------- Actions -------------------------------- */
+.lesson-detail__action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+  padding: var(--space-6);
+  text-align: center;
+  border-top: 1px solid var(--divider);
+}
+
+.lesson-detail__action-hint {
+  font-size: var(--text-sm);
+  color: var(--text-subtle);
+  margin: 0;
+}
+
+/* --------------------------- Navigation voisins --------------------------- */
+.lesson-detail__nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+}
+
+.lesson-detail__nav-btn {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.lesson-detail__nav-btn .btn__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lesson-detail__nav-btn--next {
+  justify-self: end;
+}
+
+/* --------------------------------- Sources -------------------------------- */
+.lesson-detail__sources {
+  margin-top: var(--space-10);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--divider);
+}
+
+.lesson-detail__sources-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  color: var(--text);
+  margin: 0 0 var(--space-4);
+}
+
+.lesson-detail__sources-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.lesson-detail__source {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lesson-detail__source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--primary);
+  font-weight: var(--weight-bold, 700);
+  text-decoration: none;
+  min-height: 24px;
+}
+
+.lesson-detail__source-link:hover {
+  text-decoration: underline;
+}
+
+.lesson-detail__source-label {
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  padding-left: calc(15px + var(--space-2));
+}
+
+/* ------------------------------ Encart chatbot ---------------------------- */
+.lesson-detail__cta {
+  margin-top: var(--space-10);
+}
+
+.lesson-detail__cta-body {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.lesson-detail__cta-text {
+  flex: 1;
+  min-width: 220px;
+}
+
+.lesson-detail__cta-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  color: var(--text);
+  margin: 0 0 var(--space-1);
+}
+
+.lesson-detail__cta-desc {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.lesson-detail__cta-actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* --------------------------------- Badges --------------------------------- */
+.lesson-detail__badges {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.lesson-detail__badge {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.lesson-detail__badge-emoji {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  flex: none;
+  font-size: var(--text-2xl);
+  border-radius: var(--radius-md);
+  background: var(--accent-soft);
+}
+
+.lesson-detail__badge strong {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  color: var(--text);
+}
+
+.lesson-detail__badge p {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin: var(--space-1) 0 0;
+}
+
+/* -------------------------------- Divers ---------------------------------- */
+.lesson-detail__back {
+  margin-top: var(--space-6);
+  display: flex;
+  justify-content: center;
+}
+
+/* ------------------------------- Responsive ------------------------------- */
+@media (max-width: 640px) {
+  .lesson-detail__header {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .lesson-detail__nav {
+    grid-template-columns: 1fr;
+  }
+
+  .lesson-detail__nav-btn--next {
+    justify-self: stretch;
+  }
+
+  .lesson-detail__breadcrumb-current {
+    max-width: 100%;
+    white-space: normal;
+  }
+}
+
+/* ---- Responsive additions ---- */
+@media (max-width: 768px) {
+  /* Fix sticky progress bar clearing the fixed header */
+  .lesson-detail__progress {
+    top: calc(var(--header-h) + var(--space-2));
+  }
+}
+
+@media (max-width: 480px) {
+  .lesson-detail__cta-text {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .lesson-detail__cta-body {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lesson-detail__cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lesson-detail__cta-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,369 @@
+/* ============================================================================
+   WeToo — Mon profil (/app/profil)
+   ============================================================================ */
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-page__tab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* ================================ Onglet profil ================================ */
+.profile-page__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+/* ------------------------------ Carte résumé ------------------------------ */
+.profile-page__summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.profile-page__identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.profile-page__name {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+  margin-bottom: var(--space-1);
+}
+
+.profile-page__since {
+  margin-top: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+}
+
+.profile-page__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.profile-page__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  min-width: 0;
+}
+
+.profile-page__stat-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-1);
+  background: var(--primary-soft);
+  color: var(--primary-soft-text);
+}
+
+.profile-page__stat-value {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.profile-page__stat-label {
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+}
+
+/* ------------------------------ Formulaire ------------------------------ */
+.profile-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.profile-page__fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-page__legend {
+  padding: 0;
+  margin-bottom: var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--text-muted);
+}
+
+.profile-page__avatars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.profile-page__avatar-option {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  font-size: var(--text-xl);
+  line-height: 1;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: border-color var(--duration-base) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.profile-page__avatar-option:hover {
+  border-color: var(--primary);
+  background: var(--surface-2);
+}
+
+.profile-page__avatar-option.is-selected {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  box-shadow: var(--shadow-sm);
+}
+
+.profile-page__avatar-check {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.profile-page__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.profile-page__field-label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--text-muted);
+}
+
+.profile-page__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.profile-page__form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+/* ================================ Onglet badges ================================ */
+.profile-page__badges-intro {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+.profile-page__badges-intro strong {
+  color: var(--text);
+}
+
+.profile-page__badges {
+  gap: var(--space-4);
+}
+
+.profile-page__badge {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  transition: transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
+}
+
+.profile-page__badge.is-obtained {
+  border-color: var(--success);
+}
+
+.profile-page__badge.is-locked {
+  opacity: 0.82;
+}
+
+.profile-page__badge-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.profile-page__badge-emoji {
+  font-size: var(--text-3xl);
+  line-height: 1;
+}
+
+.profile-page__badge.is-locked .profile-page__badge-emoji {
+  filter: grayscale(1);
+  opacity: 0.7;
+}
+
+.profile-page__badge-name {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+}
+
+.profile-page__badge-desc {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-normal);
+}
+
+.profile-page__badge-criteria {
+  margin-top: auto;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--divider);
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  line-height: var(--leading-normal);
+}
+
+.profile-page__badge-criteria span {
+  font-weight: var(--weight-bold);
+  color: var(--text-muted);
+}
+
+/* ================================ Onglet réglages ================================ */
+.profile-page__setting {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.profile-page__setting-head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.profile-page__setting-title {
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  margin-bottom: var(--space-1);
+}
+
+.profile-page__theme {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.profile-page__theme-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  cursor: pointer;
+  transition: border-color var(--duration-base) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out), color var(--duration-base) var(--ease-out);
+}
+
+.profile-page__theme-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.profile-page__theme-btn.is-selected {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+/* ================================ Responsive ================================ */
+@media (min-width: 1000px) {
+  .profile-page__grid {
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+
+  .profile-page__summary {
+    position: sticky;
+    top: calc(var(--header-h) + var(--space-5));
+  }
+}
+
+@media (max-width: 520px) {
+  .profile-page__identity {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .profile-page__setting-head {
+    gap: var(--space-3);
+  }
+}
+
+/* ---- Responsive additions ---- */
+@media (max-width: 480px) {
+  .profile-page__stat {
+    padding: var(--space-2);
+  }
+
+  .profile-page__stat-value {
+    font-size: var(--text-lg);
+  }
+
+  .profile-page__form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .profile-page__form-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .profile-page__badge {
+    min-width: 0;
+  }
+}

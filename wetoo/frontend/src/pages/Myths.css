@@ -1,0 +1,240 @@
+/* ============================================================================
+   Myths — page « Mythes & vraies infos »
+   Toutes les couleurs proviennent des tokens (tokens.css).
+   ============================================================================ */
+
+.myths-page {
+  width: 100%;
+  min-width: 0;
+}
+
+/* ------------------------------ Bandeau compteur ------------------------------ */
+.myths-page__summary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.myths-page__count {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--primary-soft);
+  color: var(--primary-soft-text);
+  font-size: var(--text-sm);
+}
+
+.myths-page__count strong {
+  font-weight: var(--weight-bold);
+}
+
+.myths-page__count-filtered {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* ------------------------------ Outils de filtrage ------------------------------ */
+.myths-page__tools {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.myths-page__search {
+  position: relative;
+  max-width: 520px;
+  width: 100%;
+}
+
+.myths-page__search-icon {
+  position: absolute;
+  left: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-subtle);
+  pointer-events: none;
+}
+
+.myths-page__search-input {
+  padding-left: calc(var(--space-4) + 26px);
+  border-radius: var(--radius-pill);
+}
+
+.myths-page__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* --------------------------------- Grille --------------------------------- */
+.myths-page__grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr));
+  align-items: start;
+}
+
+/* ------------------------------ Carte de mythe ------------------------------ */
+.myth-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  animation: myth-in var(--duration-slow) var(--ease-out) both;
+}
+
+.myth-card__top {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.myth-card__myth,
+.myth-card__truth {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+}
+
+.myth-card__myth {
+  background: var(--danger-soft);
+  border: 1px solid color-mix(in srgb, var(--danger) 30%, transparent);
+}
+
+.myth-card__truth {
+  background: var(--success-soft);
+  border: 1px solid color-mix(in srgb, var(--success) 30%, transparent);
+  animation: myth-reveal var(--duration-slow) var(--ease-out) both;
+}
+
+.myth-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-pill);
+}
+
+.myth-card__icon--myth {
+  background: var(--danger);
+  color: #fff;
+}
+
+.myth-card__icon--truth {
+  background: var(--success);
+  color: #fff;
+}
+
+.myth-card__label {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.myth-card__text {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+.myth-card__source {
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+}
+
+.myth-card__footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.myth-card__source-hint {
+  font-size: var(--text-2xs);
+  color: var(--text-subtle);
+  text-align: center;
+}
+
+/* Animations (neutralisées par prefers-reduced-motion global) */
+@keyframes myth-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes myth-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------ Appel à l'action ------------------------------ */
+.myths-page__cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  margin-top: var(--space-10);
+}
+
+.myths-page__cta-text {
+  flex: 1;
+  min-width: min(100%, 320px);
+}
+
+.myths-page__cta-title {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-2);
+}
+
+/* ------------------------------- Responsive ------------------------------- */
+@media (max-width: 520px) {
+  .myths-page__cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .myths-page__cta .btn {
+    width: 100%;
+  }
+}
+
+/* ---- Responsive additions ---- */
+@media (max-width: 480px) {
+  .myths-page__tools {
+    margin-bottom: var(--space-5);
+  }
+
+  .myth-card__icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .myth-card__text {
+    font-size: var(--text-sm);
+    word-break: break-word;
+  }
+}

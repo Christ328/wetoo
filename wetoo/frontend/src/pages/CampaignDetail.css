@@ -1,0 +1,291 @@
+/* ============================================================================
+   CampaignDetail — détail d'une campagne de sensibilisation
+   ============================================================================ */
+
+.campaign-detail {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* ------------------------------ Fil d'Ariane ------------------------------ */
+.campaign-detail__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-subtle);
+  min-width: 0;
+}
+
+.campaign-detail__breadcrumb a {
+  font-weight: var(--weight-semibold);
+}
+
+.campaign-detail__breadcrumb span {
+  min-width: 0;
+  color: var(--text-muted);
+}
+
+/* ------------------------------ Bandeau d'en-tête ------------------------------ */
+.campaign-detail__hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-10) var(--space-8);
+  border-radius: var(--radius-2xl);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: var(--on-primary);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.campaign-detail__hero-emoji {
+  flex: none;
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.campaign-detail__hero-body {
+  min-width: 0;
+}
+
+.campaign-detail__hero-theme {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.campaign-detail__hero-title {
+  margin-top: var(--space-2);
+  font-size: clamp(1.6rem, 3.5vw, var(--text-4xl));
+  color: inherit;
+}
+
+.campaign-detail__hero-hashtags {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.campaign-detail__hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.campaign-detail__hero-meta li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.campaign-detail__hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+/* -------------------------------- Sections -------------------------------- */
+.campaign-detail__section-title {
+  font-size: var(--text-xl);
+}
+
+.campaign-detail__description {
+  margin-top: var(--space-3);
+  max-width: var(--measure);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+  white-space: pre-line;
+}
+
+/* ------------------------------- Le savais-tu ? ------------------------------- */
+.campaign-detail__facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.campaign-detail__facts li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+}
+
+.campaign-detail__facts svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--warm);
+}
+
+/* --------------------------------- Planning --------------------------------- */
+.campaign-detail__timeline {
+  position: relative;
+  margin-top: var(--space-5);
+  padding-left: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.campaign-detail__timeline::before {
+  content: '';
+  position: absolute;
+  left: 17px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+
+.campaign-detail__timeline-item {
+  position: relative;
+  display: flex;
+  gap: var(--space-4);
+}
+
+.campaign-detail__timeline-marker {
+  position: absolute;
+  left: calc(-1 * var(--space-6) + 6px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+}
+
+.campaign-detail__timeline-content {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  flex: 1;
+  min-width: 0;
+}
+
+.campaign-detail__timeline-day {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.campaign-detail__timeline-label {
+  margin-top: 2px;
+  font-size: var(--text-base);
+}
+
+.campaign-detail__timeline-activity {
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* -------------------------------- Ressources -------------------------------- */
+.campaign-detail__resources {
+  gap: var(--space-2);
+}
+
+/* ---------------------------------- Partage ---------------------------------- */
+.campaign-detail__share-text {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+}
+
+.campaign-detail__share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+/* ------------------------------ Appels à l'action ------------------------------ */
+.campaign-detail__cta {
+  align-items: stretch;
+}
+
+.campaign-detail__cta-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.campaign-detail__cta-inner > svg {
+  color: var(--primary);
+}
+
+.campaign-detail__cta-title {
+  font-size: var(--text-lg);
+}
+
+.campaign-detail__cta-text {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+}
+
+.campaign-detail__cta-inner .btn {
+  margin-top: auto;
+}
+
+@media (max-width: 640px) {
+  .campaign-detail__hero {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-6);
+  }
+
+  .campaign-detail__hero-emoji {
+    font-size: 3rem;
+  }
+}
+
+/* ---- Responsive additions ---- */
+@media (max-width: 480px) {
+  .campaign-detail__hero {
+    padding: var(--space-5) var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .campaign-detail__breadcrumb {
+    flex-wrap: wrap;
+  }
+
+  .campaign-detail__breadcrumb span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: calc(100vw - 120px);
+  }
+
+  .campaign-detail__hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .campaign-detail__hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

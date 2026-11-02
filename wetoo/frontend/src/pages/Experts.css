@@ -1,0 +1,253 @@
+/* ============================================================================
+   Experts — annuaire des professionnel·les de santé
+   ============================================================================ */
+
+.experts-page {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ------------------------------- Barre d'outils ------------------------------- */
+.experts-page__toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.experts-page__search {
+  position: relative;
+  max-width: 520px;
+}
+
+.experts-page__search-icon {
+  position: absolute;
+  left: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-subtle);
+  pointer-events: none;
+}
+
+.experts-page__search-input {
+  padding-left: var(--space-10);
+}
+
+/* -------------------------------- Cartes --------------------------------- */
+.experts-page__grid {
+  align-items: stretch;
+}
+
+.experts-page__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.experts-page__card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.experts-page__card-id {
+  min-width: 0;
+}
+
+.experts-page__name {
+  font-size: var(--text-lg);
+}
+
+.experts-page__role {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--primary);
+}
+
+.experts-page__specialty {
+  margin-top: 2px;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.experts-page__bio {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+}
+
+.experts-page__languages {
+  gap: var(--space-2);
+}
+
+.experts-page__meta {
+  flex: 1;
+  align-items: center;
+}
+
+/* ------------------------------ Mes demandes ------------------------------ */
+.experts-page__requests {
+  margin-top: var(--space-10);
+}
+
+.experts-page__section-title {
+  margin-bottom: var(--space-4);
+  font-size: var(--text-2xl);
+}
+
+.experts-page__request-list {
+  list-style: none;
+}
+
+.experts-page__request-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.experts-page__request-id {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.experts-page__request-expert {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--text);
+}
+
+.experts-page__request-question {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.experts-page__request-date {
+  display: inline-block;
+  margin-top: var(--space-3);
+  font-size: var(--text-xs);
+}
+
+/* ----------------------------- Confidentialité ----------------------------- */
+.experts-page__privacy {
+  margin-top: var(--space-10);
+}
+
+.experts-page__privacy-text {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+}
+
+.experts-page__privacy-text + .experts-page__privacy-text {
+  margin-top: var(--space-3);
+}
+
+.experts-page__privacy .btn {
+  margin-top: var(--space-4);
+}
+
+/* ---------------------------------- Modales ---------------------------------- */
+.experts-page__form {
+  gap: var(--space-5);
+}
+
+.experts-page__counter {
+  margin-top: calc(-1 * var(--space-2));
+  text-align: right;
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+}
+
+.experts-page__check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  background: var(--surface-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-normal);
+  cursor: pointer;
+}
+
+.experts-page__check input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  margin-top: 2px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.experts-page__form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* ------------------------------ Confirmation ------------------------------ */
+.experts-page__success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.experts-page__success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-pill);
+  background: var(--success-soft);
+  color: var(--success-soft-text);
+}
+
+.experts-page__success-message {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+}
+
+.experts-page__success .experts-page__form-actions {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .experts-page__search {
+    max-width: 100%;
+  }
+}
+
+/* ---- Responsive additions ---- */
+@media (max-width: 480px) {
+  .experts-page__search {
+    max-width: 100%;
+  }
+
+  .experts-page__form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .experts-page__form-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .experts-page__request-head {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+}

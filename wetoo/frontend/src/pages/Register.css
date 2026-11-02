@@ -1,0 +1,244 @@
+/* ============================================================================
+   WeToo — Page d'inscription (/inscription)
+   ============================================================================ */
+
+.register-page {
+  padding-block: clamp(var(--space-8), 6vw, var(--space-16)) var(--space-16);
+}
+
+.register-page__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: start;
+  max-width: 1040px;
+}
+
+/* ------------------------------ Colonne intro ------------------------------ */
+.register-page__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  align-items: flex-start;
+}
+
+.register-page__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent-soft-text);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+}
+
+.register-page__title {
+  font-size: clamp(1.9rem, 4vw, var(--text-4xl));
+  letter-spacing: -0.02em;
+}
+
+.register-page__note {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.register-page__note strong {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-size: var(--text-base);
+}
+
+.register-page__note p {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+}
+
+.register-page__reassure {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--accent-soft-text);
+}
+
+/* ------------------------------ Formulaire ------------------------------ */
+.register-page__form-col {
+  width: 100%;
+}
+
+.register-page__card {
+  width: 100%;
+}
+
+.register-page__card-head {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.register-page__card-title {
+  font-size: var(--text-2xl);
+}
+
+.register-page__card-head p {
+  font-size: var(--text-sm);
+}
+
+.register-page__alert {
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--danger-soft);
+  color: var(--danger-soft-text);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.register-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.register-page__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.register-page__field-label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+}
+
+.register-page__field-hint {
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+}
+
+.register-page__input-wrap {
+  position: relative;
+}
+
+.register-page__input-icon {
+  position: absolute;
+  top: 50%;
+  left: var(--space-4);
+  transform: translateY(-50%);
+  color: var(--text-subtle);
+  pointer-events: none;
+}
+
+.register-page__input {
+  padding-left: calc(var(--space-4) * 2 + 18px);
+}
+
+/* Nombre (âge) : on masque les flèches pour un rendu homogène */
+.register-page__input[type='number']::-webkit-outer-spin-button,
+.register-page__input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.register-page__input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* -------------------- Indicateur de robustesse -------------------- */
+.register-page__strength {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.register-page__strength-bars {
+  display: flex;
+  gap: 6px;
+  flex: 1;
+  min-width: 120px;
+}
+
+.register-page__strength-bar {
+  height: 6px;
+  flex: 1;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  transition: background-color var(--duration-base) var(--ease-out);
+}
+
+.register-page__strength-bar--danger.is-on {
+  background: var(--danger);
+}
+.register-page__strength-bar--warning.is-on {
+  background: var(--warning);
+}
+.register-page__strength-bar--info.is-on {
+  background: var(--info);
+}
+.register-page__strength-bar--success.is-on {
+  background: var(--success);
+}
+
+.register-page__strength-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-muted);
+}
+
+/* ------------------------------ Chips ------------------------------ */
+.register-page__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.register-page__submit {
+  margin-top: var(--space-1);
+}
+
+.register-page__switch {
+  margin-top: var(--space-5);
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.register-page__switch a {
+  font-weight: var(--weight-bold);
+}
+
+/* -------------------------------- Responsive -------------------------------- */
+@media (min-width: 980px) {
+  .register-page__inner {
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: var(--space-16);
+  }
+  .register-page__intro {
+    position: sticky;
+    top: calc(var(--header-h) + var(--space-6));
+  }
+}
+
+/* ---- Responsive additions ---- */
+@media (max-width: 480px) {
+  .register-page {
+    padding-block: var(--space-6) var(--space-10);
+  }
+
+  .register-page__note {
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-3);
+  }
+}
