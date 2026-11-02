@@ -1,0 +1,284 @@
+﻿/* ============================================================================
+   WeToo — Design Tokens
+   ----------------------------------------------------------------------------
+   Direction visuelle issue du skill "ui-ux-pro-max" :
+   - Palette produit « Membership / Community » : violet communautaire + vert
+     « rejoindre » (#7C3AED / #16A34A), enrichie d'un teal santé mentale et
+     d'un rose empathie (chaleur, sans jugement).
+   - Typographie « Playful Creative » : Fredoka (titres) + Nunito (corps).
+   - Style « Vibrant & Block-based + Motion-Driven », décliné en clair ET sombre
+     (le mode sombre donne la sensation d'un espace sûr et privé).
+   Contraintes appliquées : contraste texte >= 4.5:1, cibles tactiles >= 44px,
+   focus visibles, rythme d'espacement 4/8px, respect de prefers-reduced-motion.
+   ============================================================================ */
+
+:root {
+  /* ---------- Primitives : couleurs ---------- */
+  --purple-50: #f5f3ff;
+  --purple-100: #ede9fe;
+  --purple-200: #ddd6fe;
+  --purple-300: #c4b5fd;
+  --purple-400: #a78bfa;
+  --purple-500: #8b5cf6;
+  --purple-600: #7c3aed;
+  --purple-700: #6d28d9;
+  --purple-800: #5b21b6;
+  --purple-900: #4c1d95;
+  --purple-950: #2e1065;
+
+  --teal-50: #f0fdfa;
+  --teal-100: #ccfbf1;
+  --teal-200: #99f6e4;
+  --teal-400: #2dd4bf;
+  --teal-500: #14b8a6;
+  --teal-600: #0d9488;
+  --teal-700: #0f766e;
+
+  --green-50: #f0fdf4;
+  --green-100: #dcfce7;
+  --green-400: #4ade80;
+  --green-500: #22c55e;
+  --green-600: #16a34a;
+  --green-700: #15803d;
+
+  --rose-50: #fff1f2;
+  --rose-100: #ffe4e6;
+  --rose-400: #fb7185;
+  --rose-500: #f43f5e;
+  --rose-600: #e11d48;
+  --rose-700: #be123c;
+
+  --amber-100: #fef3c7;
+  --amber-400: #fbbf24;
+  --amber-500: #f59e0b;
+  --amber-600: #d97706;
+  --amber-700: #b45309;
+
+  --blue-50: #f0f9ff;
+  --blue-100: #e0f2fe;
+  --blue-400: #38bdf8;
+  --blue-500: #0ea5e9;
+  --blue-600: #0284c7;
+  --blue-700: #0369a1;
+
+  --red-500: #ef4444;
+  --red-600: #dc2626;
+  --red-700: #b91c1c;
+
+  --ink-0: #ffffff;
+  --ink-50: #faf9fc;
+  --ink-100: #f4f2f9;
+  --ink-200: #e9e6f2;
+  --ink-300: #d6d1e4;
+  --ink-400: #a9a3c2;
+  --ink-500: #7a7391;
+  --ink-600: #5b5570;
+  --ink-700: #3f3a52;
+  --ink-800: #272235;
+  --ink-900: #1a1626;
+  --ink-950: #120f1e;
+
+  /* ---------- Typographie ---------- */
+  --font-heading: 'Fredoka', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Nunito', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --text-2xs: 0.6875rem; /* 11px - réservé aux libellés courts */
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px - base corps */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.5rem; /* 24px */
+  --text-3xl: 1.875rem; /* 30px */
+  --text-4xl: 2.25rem; /* 36px */
+  --text-5xl: 3rem; /* 48px */
+  --text-6xl: 3.75rem; /* 60px */
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --measure: 68ch; /* largeur de lecture confortable */
+
+  /* ---------- Espacement (rythme 4/8px) ---------- */
+  --space-1: 0.25rem; /* 4 */
+  --space-2: 0.5rem; /* 8 */
+  --space-3: 0.75rem; /* 12 */
+  --space-4: 1rem; /* 16 */
+  --space-5: 1.25rem; /* 20 */
+  --space-6: 1.5rem; /* 24 */
+  --space-8: 2rem; /* 32 */
+  --space-10: 2.5rem; /* 40 */
+  --space-12: 3rem; /* 48 */
+  --space-16: 4rem; /* 64 */
+  --space-20: 5rem; /* 80 */
+  --space-24: 6rem; /* 96 */
+
+  /* ---------- Rayons (amis, arrondis) ---------- */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 36px;
+  --radius-pill: 999px;
+
+  /* ---------- Ombres ---------- */
+  --shadow-xs: 0 1px 2px rgba(26, 22, 38, 0.06);
+  --shadow-sm: 0 2px 6px rgba(26, 22, 38, 0.07);
+  --shadow-md: 0 8px 20px -8px rgba(46, 16, 101, 0.22);
+  --shadow-lg: 0 18px 40px -16px rgba(46, 16, 101, 0.3);
+  --shadow-xl: 0 32px 64px -24px rgba(46, 16, 101, 0.35);
+  --shadow-glow: 0 0 0 1px rgba(124, 58, 237, 0.14), 0 12px 32px -12px rgba(124, 58, 237, 0.45);
+
+  /* ---------- Motion ---------- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+  --duration-slower: 520ms;
+
+  /* ---------- Structure ---------- */
+  --container: 1180px;
+  --container-narrow: 760px;
+  --header-h: 68px;
+  --bottom-nav-h: 64px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --z-header: 100;
+  --z-drawer: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+}
+
+/* =========================== THÈME CLAIR =========================== */
+[data-theme='light'] {
+  --bg: var(--purple-50);
+  --bg-alt: var(--ink-50);
+  --surface: #ffffff;
+  --surface-2: var(--purple-50);
+  --surface-3: var(--purple-100);
+  --surface-glass: rgba(255, 255, 255, 0.78);
+
+  --text: var(--ink-900);
+  --text-muted: var(--ink-600);
+  --text-subtle: var(--ink-500);
+
+  --border: var(--purple-200);
+  --border-strong: var(--purple-300);
+  --divider: var(--ink-200);
+
+  --primary: var(--purple-700);
+  --primary-hover: var(--purple-800);
+  --primary-active: var(--purple-900);
+  --on-primary: #ffffff;
+  --primary-soft: var(--purple-100);
+  --primary-soft-text: var(--purple-800);
+
+  --accent: var(--teal-600);
+  --accent-hover: var(--teal-700);
+  --on-accent: #ffffff;
+  --accent-soft: var(--teal-50);
+  --accent-soft-text: var(--teal-700);
+
+  --warm: var(--rose-600);
+  --on-warm: #ffffff;
+  --warm-soft: var(--rose-50);
+  --warm-soft-text: var(--rose-700);
+
+  --success: var(--green-600);
+  --success-soft: var(--green-50);
+  --success-soft-text: var(--green-700);
+
+  --warning: var(--amber-600);
+  --warning-soft: var(--amber-100);
+  --warning-soft-text: var(--amber-700);
+
+  --danger: var(--red-600);
+  --danger-soft: var(--rose-50);
+  --danger-soft-text: var(--red-700);
+
+  --info: var(--blue-600);
+  --info-soft: var(--blue-50);
+  --info-soft-text: var(--blue-700);
+
+  --ring: var(--purple-600);
+  --overlay: rgba(26, 22, 38, 0.55);
+  --skeleton: var(--ink-200);
+
+  --hero-grad: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 40%, #0d9488 100%);
+  --mesh-1: rgba(124, 58, 237, 0.22);
+  --mesh-2: rgba(13, 148, 136, 0.18);
+  --mesh-3: rgba(225, 29, 72, 0.14);
+}
+
+/* =========================== THÈME SOMBRE =========================== */
+[data-theme='dark'] {
+  --bg: #120f1e;
+  --bg-alt: #0d0b16;
+  --surface: #1b1530;
+  --surface-2: #221a3b;
+  --surface-3: #2a2148;
+  --surface-glass: rgba(27, 21, 48, 0.76);
+
+  --text: #f5f3ff;
+  --text-muted: #b9b2d4;
+  --text-subtle: #928bb0;
+
+  --border: rgba(196, 181, 253, 0.16);
+  --border-strong: rgba(196, 181, 253, 0.32);
+  --divider: rgba(196, 181, 253, 0.12);
+
+  --primary: #a78bfa;
+  --primary-hover: #c4b5fd;
+  --primary-active: #ddd6fe;
+  --on-primary: #1b1233;
+  --primary-soft: rgba(167, 139, 250, 0.16);
+  --primary-soft-text: #ddd6fe;
+
+  --accent: #2dd4bf;
+  --accent-hover: #5eead4;
+  --on-accent: #0b201d;
+  --accent-soft: rgba(45, 212, 191, 0.14);
+  --accent-soft-text: #99f6e4;
+
+  --warm: #f472b6;
+  --on-warm: #2a0c1c;
+  --warm-soft: rgba(244, 114, 182, 0.14);
+  --warm-soft-text: #fbcfe8;
+
+  --success: #4ade80;
+  --success-soft: rgba(74, 222, 128, 0.14);
+  --success-soft-text: #bbf7d0;
+
+  --warning: #fbbf24;
+  --warning-soft: rgba(251, 191, 36, 0.14);
+  --warning-soft-text: #fde68a;
+
+  --danger: #fb7185;
+  --danger-soft: rgba(251, 113, 133, 0.14);
+  --danger-soft-text: #fecdd3;
+
+  --info: #38bdf8;
+  --info-soft: rgba(56, 189, 248, 0.14);
+  --info-soft-text: #bae6fd;
+
+  --ring: #c4b5fd;
+  --overlay: rgba(6, 4, 12, 0.68);
+  --skeleton: rgba(196, 181, 253, 0.12);
+
+  --hero-grad: linear-gradient(135deg, #7c3aed 0%, #a78bfa 45%, #0d9488 100%);
+  --mesh-1: rgba(124, 58, 237, 0.4);
+  --mesh-2: rgba(13, 148, 136, 0.32);
+  --mesh-3: rgba(225, 29, 72, 0.24);
+}
