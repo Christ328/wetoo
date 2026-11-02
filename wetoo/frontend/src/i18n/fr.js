@@ -141,6 +141,69 @@ export const fr = {
     testimonialPlay:  'Reprendre le défilement',
     testimonialPos:   (i, total) => `Témoignage ${i} sur ${total}`,
     testimonialAge:   (age) => `${age} ans`,
+
+    /* -- Problèmes (4 cartes) -- */
+    problem1Title: 'Le tabou et le silence',
+    problem1Text:  "À la maison, on n'en parle pas. À l'école, pas de programme structuré. Les adolescents grandissent seuls avec leurs questions.",
+    problem2Title: 'Les fausses informations',
+    problem2Text:  "Mythes, préjugés et « fake news » circulent plus vite que les faits. « La pilule rend stérile », « on ne tombe pas enceinte la première fois »...",
+    problem3Title: 'Des outils inadaptés',
+    problem3Text:  'Les rares espaces numériques sont souvent réservés aux filles, trop centrés sur le texte, et exigent une connexion coûteuse.',
+    problem4Title: 'La solitude et la détresse',
+    problem4Text:  "Grossesses précoces, IST, anxiété, dépression. Sans espace sûr, la honte et la stigmatisation s'installent et coupent les jeunes de toute aide.",
+
+    /* -- Confiance (4 éléments) -- */
+    trust1Title: "Confidentialité d'abord",
+    trust1Text:  "Anonymat possible partout, données minimisées, aucune revente d'information. Tu décides de ce que tu partages.",
+    trust2Title: 'Modération et sécurité',
+    trust2Text:  "Une équipe formée modère les échanges, détecte les situations à risque et oriente vers de l'aide réelle.",
+    trust3Title: 'Pensé pour la faible connexion',
+    trust3Text:  "Application web légère et économe en données, utilisable même avec un petit forfait. Le mode hors ligne complet, le SMS et l'USSD sont des perspectives que nous voulons développer pour les zones sans internet.",
+    trust4Title: 'Inclusif par construction',
+    trust4Text:  'Filles et garçons, scolarisés et non scolarisés, francophones et locuteurs de langues locales. Personne n\'est laissé de côté.',
+
+    /* -- Plan (4 étapes) -- */
+    plan1Title: 'Finaliser le produit',
+    plan1Text:  "Stabiliser le chatbot, les cours et le forum, puis faire du mode hors ligne - aujourd'hui encore une perspective - une réalité sur Android bas de gamme.",
+    plan2Title: "Former et outiller l'équipe",
+    plan2Text:  'Former 6 jeunes modérateurs et 4 jeunes créateurs de contenu à la santé sexuelle et aux premiers secours psychologiques.',
+    plan3Title: 'Déployer dans 3 villes',
+    plan3Text:  'Piloter la plateforme à Cotonou, Parakou et Porto-Novo avec des clubs jeunes, des centres de santé et des radios locales.',
+    plan4Title: 'Mesurer et partager',
+    plan4Text:  "Suivre l'usage, mesurer les changements de connaissances et publier un rapport ouvert pour que d'autres pays puissent répliquer.",
+
+    /* -- Piliers (4 piliers) -- */
+    pillarChatbotTitle:      '1. Le chatbot qui démonte les fausses infos',
+    pillarChatbotTagline:    'Une première écoute, 24 h/24, sans jugement',
+    pillarChatbotDesc:       "Un assistant conversationnel entraîné pour répondre aux questions que les jeunes n'osent poser à personne. Il démystifie les rumeurs les plus répandues et relie toujours la santé sexuelle au bien-être mental.",
+    pillarChatbotBullet1:    'Réponses simples, en français et en langues locales',
+    pillarChatbotBullet2:    "Détection des situations de détresse et orientation immédiate vers de l'aide",
+    pillarChatbotBullet3:    '« je ne sais pas » et transfère à un professionnel',
+    pillarChatbotOutro:      "Exemple : « La peur d'une grossesse non désirée provoque de l'anxiété. Voici comment en parler. »",
+
+    pillarLearnTitle:        "2. L'espace d'apprentissage gamifié",
+    pillarLearnTagline:      'Apprendre comme on joue',
+    pillarLearnDesc:         "Des mini-cours courts, des quiz, des badges et un classement. L'apprentissage devient une expérience valorisante, y compris pour les jeunes qui ne sont plus à l'école - avec des certificats numériques à la clé.",
+    pillarLearnBullet1:      "Cours de 3 à 7 minutes, lisibles même sur un petit forfait",
+    pillarLearnBullet2:      'Points, badges et classement pour garder la motivation',
+    pillarLearnBullet3:      'Certificat numérique à la fin de chaque parcours',
+    pillarLearnOutro:        "Résultat : des jeunes qui reviennent, terminent et repartagent ce qu'ils ont appris.",
+
+    pillarCommunityTitle:    "3. L'espace communautaire et d'écoute",
+    pillarCommunityTagline:  "Briser l'isolement, ensemble",
+    pillarCommunityDesc:     "Un forum modéré où l'on peut se confier en anonyme, partager son expérience et trouver du soutien. Et surtout : contacter en privé une sage-femme, une psychologue ou un infirmier sans se déplacer au centre de santé.",
+    pillarCommunityBullet1:  'Questions anonymes et pseudonymes stables',
+    pillarCommunityBullet2:  'Modération humaine formée + signalement en un clic',
+    pillarCommunityBullet3:  'Mise en relation confidentielle avec des professionnels de santé',
+    pillarCommunityOutro:    '« Je ne suis plus seul·e face à mes doutes. »',
+
+    pillarCampaignsTitle:    "4. L'engagement communautaire, hors de l'écran",
+    pillarCampaignsTagline:  'Une présence continue dans la vraie vie',
+    pillarCampaignsDesc:     "Un groupe WhatsApp animé chaque jour avec des professionnels partenaires, et une campagne de sensibilisation thématique chaque mois : contraception, santé mentale, dépistage, consentement... relayée à la radio et sur les réseaux sociaux.",
+    pillarCampaignsBullet1:  "Groupe WhatsApp d'entraide animé quotidiennement",
+    pillarCampaignsBullet2:  'Une campagne nationale chaque mois avec les jeunes leaders',
+    pillarCampaignsBullet3:  'Relais radio et affiches dans les lycées et centres de santé',
+    pillarCampaignsOutro:    'Nous parlons aux jeunes là où ils vivent déjà.',
   },
 
   /* -- Home page ----------------------------------------------------------- */

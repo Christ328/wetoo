@@ -141,6 +141,69 @@ export const en = {
     testimonialPlay:  'Resume auto-scroll',
     testimonialPos:   (i, total) => `Testimonial ${i} of ${total}`,
     testimonialAge:   (age) => `${age} years old`,
+
+    /* -- Problems (4 cards) -- */
+    problem1Title: 'The taboo and silence',
+    problem1Text:  "At home, nobody talks about it. At school, no structured programme. Teenagers grow up alone with their questions.",
+    problem2Title: 'Misinformation',
+    problem2Text:  "Myths, prejudices and fake news spread faster than facts. \"The pill causes infertility\", \"you can't get pregnant the first time\"...",
+    problem3Title: 'Inadequate tools',
+    problem3Text:  "The few digital spaces available are often aimed at girls, too text-heavy, and require a costly connection.",
+    problem4Title: 'Loneliness and distress',
+    problem4Text:  "Early pregnancies, STIs, anxiety, depression. Without a safe space, shame and stigma set in and cut young people off from any help.",
+
+    /* -- Trust (4 items) -- */
+    trust1Title: 'Privacy first',
+    trust1Text:  'Anonymity available everywhere, minimal data, no resale of information. You decide what you share.',
+    trust2Title: 'Moderation and safety',
+    trust2Text:  'A trained team moderates exchanges, detects at-risk situations and directs towards real help.',
+    trust3Title: 'Designed for low connectivity',
+    trust3Text:  'Lightweight, data-efficient web app, usable even with a small data plan. Full offline mode, SMS and USSD are upcoming features.',
+    trust4Title: 'Inclusive by design',
+    trust4Text:  'Girls and boys, in and out of school, French speakers and local language speakers. Nobody is left behind.',
+
+    /* -- Plan (4 steps) -- */
+    plan1Title: 'Finalise the product',
+    plan1Text:  'Stabilise the chatbot, lessons and forum, then make offline mode - currently just a vision - a reality on low-end Android devices.',
+    plan2Title: 'Train and equip the team',
+    plan2Text:  'Train 6 young moderators and 4 young content creators in sexual health and psychological first aid.',
+    plan3Title: 'Deploy in 3 cities',
+    plan3Text:  'Pilot the platform in Cotonou, Parakou and Porto-Novo with youth clubs, health centres and local radio stations.',
+    plan4Title: 'Measure and share',
+    plan4Text:  "Track usage, measure knowledge changes and publish an open report so other countries can replicate the model.",
+
+    /* -- Pillars (4 pillars) -- */
+    pillarChatbotTitle:      '1. The chatbot that busts misinformation',
+    pillarChatbotTagline:    'A first point of contact, 24/7, without judgment',
+    pillarChatbotDesc:       "A conversational assistant trained to answer the questions young people dare not ask anyone. It demystifies the most common rumours and always links sexual health to mental well-being.",
+    pillarChatbotBullet1:    'Simple answers, in French and local languages',
+    pillarChatbotBullet2:    'Detection of distress situations and immediate referral to help',
+    pillarChatbotBullet3:    "Knows how to say \"I don't know\" and refers to a professional",
+    pillarChatbotOutro:      "Example: \"Fear of an unwanted pregnancy causes anxiety. Here's how to talk about it.\"",
+
+    pillarLearnTitle:        '2. The gamified learning space',
+    pillarLearnTagline:      'Learn like you play',
+    pillarLearnDesc:         "Short mini-courses, quizzes, badges and a leaderboard. Learning becomes a rewarding experience, even for young people no longer in school - with digital certificates at the end.",
+    pillarLearnBullet1:      '3 to 7 minute courses, readable even on a small data plan',
+    pillarLearnBullet2:      'Points, badges and leaderboard to stay motivated',
+    pillarLearnBullet3:      'Digital certificate at the end of each course',
+    pillarLearnOutro:        "Result: young people who come back, finish and share what they've learned.",
+
+    pillarCommunityTitle:    '3. The community and peer support space',
+    pillarCommunityTagline:  'Breaking isolation, together',
+    pillarCommunityDesc:     "A moderated forum where you can share anonymously, share your experience and find support. And above all: privately contact a midwife, psychologist or nurse without going to a health centre.",
+    pillarCommunityBullet1:  'Anonymous questions and stable pseudonyms',
+    pillarCommunityBullet2:  'Human moderation + one-click reporting',
+    pillarCommunityBullet3:  'Confidential connection with health professionals',
+    pillarCommunityOutro:    '"I\'m no longer alone facing my doubts."',
+
+    pillarCampaignsTitle:    '4. Community engagement, beyond the screen',
+    pillarCampaignsTagline:  'A continuous presence in real life',
+    pillarCampaignsDesc:     "A WhatsApp group animated daily with partner professionals, and a monthly thematic awareness campaign: contraception, mental health, screening, consent... relayed on radio and social media.",
+    pillarCampaignsBullet1:  'WhatsApp peer support group animated daily',
+    pillarCampaignsBullet2:  'One national campaign per month with young leaders',
+    pillarCampaignsBullet3:  'Radio relay and posters in schools and health centres',
+    pillarCampaignsOutro:    'We talk to young people where they already live.',
   },
 
   /* -- Home page ----------------------------------------------------------- */

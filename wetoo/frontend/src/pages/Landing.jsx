@@ -153,116 +153,68 @@ export default function Landing() {
     {
       icon: MessageSquareText,
       tone: 'warm',
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? 'The taboo and silence'
-        : 'Le tabou et le silence',
-      text: t('landing.problemEyebrow') === 'The problem'
-        ? "At home, nobody talks about it. At school, no structured programme. Teenagers grow up alone with their questions."
-        : "À la maison, on n'en parle pas. À l'école, pas de programme structuré. Les adolescents grandissent seuls avec leurs questions.",
+      title: t('landing.problem1Title'),
+      text:  t('landing.problem1Text'),
     },
     {
       icon: Eye,
       tone: 'warning',
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? 'Misinformation'
-        : 'Les fausses informations',
-      text: t('landing.problemEyebrow') === 'The problem'
-        ? "Myths, prejudices and fake news spread faster than facts. \"The pill causes infertility\", \"you can't get pregnant the first time\"..."
-        : "Mythes, préjugés et « fake news » circulent plus vite que les faits. « La pilule rend stérile », « on ne tombe pas enceinte la première fois »...",
+      title: t('landing.problem2Title'),
+      text:  t('landing.problem2Text'),
     },
     {
       icon: Smartphone,
       tone: 'info',
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? 'Inadequate tools'
-        : 'Des outils inadaptés',
-      text: t('landing.problemEyebrow') === 'The problem'
-        ? "The few digital spaces available are often aimed at girls, too text-heavy, and require a costly connection."
-        : "Les rares espaces numériques sont souvent réservés aux filles, trop centrés sur le texte, et exigent une connexion coûteuse.",
+      title: t('landing.problem3Title'),
+      text:  t('landing.problem3Text'),
     },
     {
       icon: HeartHandshake,
       tone: 'danger',
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? 'Loneliness and distress'
-        : 'La solitude et la détresse',
-      text: t('landing.problemEyebrow') === 'The problem'
-        ? "Early pregnancies, STIs, anxiety, depression. Without a safe space, shame and stigma set in and cut young people off from any help."
-        : "Grossesses précoces, IST, anxiété, dépression. Sans espace sûr, la honte et la stigmatisation s'installent et coupent les jeunes de toute aide.",
+      title: t('landing.problem4Title'),
+      text:  t('landing.problem4Text'),
     },
   ];
 
   const TRUST = [
     {
       icon: ShieldCheck,
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? 'Privacy first'
-        : 'Confidentialité d\'abord',
-      text: t('landing.problemEyebrow') === 'The problem'
-        ? 'Anonymity available everywhere, minimal data, no resale of information. You decide what you share.'
-        : 'Anonymat possible partout, données minimisées, aucune revente d\'information. Tu décides de ce que tu partages.',
+      title: t('landing.trust1Title'),
+      text:  t('landing.trust1Text'),
     },
     {
       icon: Lock,
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? 'Moderation and safety'
-        : 'Modération et sécurité',
-      text: t('landing.problemEyebrow') === 'The problem'
-        ? 'A trained team moderates exchanges, detects at-risk situations and directs towards real help.'
-        : 'Une équipe formée modère les échanges, détecte les situations à risque et oriente vers de l\'aide réelle.',
+      title: t('landing.trust2Title'),
+      text:  t('landing.trust2Text'),
     },
     {
       icon: WifiOff,
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? 'Designed for low connectivity'
-        : 'Pensé pour la faible connexion',
-      text: t('landing.problemEyebrow') === 'The problem'
-        ? 'Lightweight, data-efficient web app, usable even with a small data plan. Full offline mode, SMS and USSD are upcoming features.'
-        : 'Application web légère et économe en données, utilisable même avec un petit forfait. Le mode hors ligne complet, le SMS et l\'USSD sont des perspectives que nous voulons développer pour les zones sans internet.',
+      title: t('landing.trust3Title'),
+      text:  t('landing.trust3Text'),
     },
     {
       icon: Globe,
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? 'Inclusive by design'
-        : 'Inclusif par construction',
-      text: t('landing.problemEyebrow') === 'The problem'
-        ? 'Girls and boys, in and out of school, French speakers and local language speakers. Nobody is left behind.'
-        : 'Filles et garçons, scolarisés et non scolarisés, francophones et locuteurs de langues locales. Personne n\'est laissé de côté.',
+      title: t('landing.trust4Title'),
+      text:  t('landing.trust4Text'),
     },
   ];
 
   const PLAN = [
     {
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? 'Finalise the product'
-        : 'Finaliser le produit',
-      text: t('landing.problemEyebrow') === 'The problem'
-        ? 'Stabilise the chatbot, lessons and forum, then make offline mode - currently just a vision - a reality on low-end Android devices.'
-        : 'Stabiliser le chatbot, les cours et le forum, puis faire du mode hors ligne - aujourd\'hui encore une perspective - une réalité sur Android bas de gamme.',
+      title: t('landing.plan1Title'),
+      text:  t('landing.plan1Text'),
     },
     {
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? 'Train and equip the team'
-        : 'Former et outiller l\'équipe',
-      text: t('landing.problemEyebrow') === 'The problem'
-        ? 'Train 6 young moderators and 4 young content creators in sexual health and psychological first aid.'
-        : 'Former 6 jeunes modérateurs et 4 jeunes créateurs de contenu à la santé sexuelle et aux premiers secours psychologiques.',
+      title: t('landing.plan2Title'),
+      text:  t('landing.plan2Text'),
     },
     {
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? 'Deploy in 3 cities'
-        : 'Déployer dans 3 villes',
-      text: t('landing.problemEyebrow') === 'The problem'
-        ? 'Pilot the platform in Cotonou, Parakou and Porto-Novo with youth clubs, health centres and local radio stations.'
-        : 'Piloter la plateforme à Cotonou, Parakou et Porto-Novo avec des clubs jeunes, des centres de santé et des radios locales.',
+      title: t('landing.plan3Title'),
+      text:  t('landing.plan3Text'),
     },
     {
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? 'Measure and share'
-        : 'Mesurer et partager',
-      text: t('landing.problemEyebrow') === 'The problem'
-        ? 'Track usage, measure knowledge changes and publish an open report so other countries can replicate the model.'
-        : 'Suivre l\'usage, mesurer les changements de connaissances et publier un rapport ouvert pour que d\'autres pays puissent répliquer.',
+      title: t('landing.plan4Title'),
+      text:  t('landing.plan4Text'),
     },
   ];
 
@@ -272,116 +224,60 @@ export default function Landing() {
       icon: MessageCircle,
       emoji: '💬',
       tone: 'purple',
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? '1. The chatbot that busts misinformation'
-        : '1. Le chatbot qui démonte les fausses infos',
-      tagline: t('landing.problemEyebrow') === 'The problem'
-        ? 'A first point of contact, 24/7, without judgment'
-        : 'Une première écoute, 24 h/24, sans jugement',
-      description: t('landing.problemEyebrow') === 'The problem'
-        ? "A conversational assistant trained to answer the questions young people dare not ask anyone. It demystifies the most common rumours and always links sexual health to mental well-being."
-        : "Un assistant conversationnel entraîné pour répondre aux questions que les jeunes n'osent poser à personne. Il démystifie les rumeurs les plus répandues et relie toujours la santé sexuelle au bien-être mental.",
-      bullets: t('landing.problemEyebrow') === 'The problem'
-        ? [
-            'Simple answers, in French and local languages',
-            'Detection of distress situations and immediate referral to help',
-            'Knows how to say "I don\'t know" and refers to a professional',
-          ]
-        : [
-            'Réponses simples, en français et en langues locales',
-            'Détection des situations de détresse et orientation immédiate vers de l\'aide',
-            'Sait dire « je ne sais pas » et transfère à un professionnel',
-          ],
-      outro: t('landing.problemEyebrow') === 'The problem'
-        ? 'Example: "Fear of an unwanted pregnancy causes anxiety. Here\'s how to talk about it."'
-        : 'Exemple : « La peur d\'une grossesse non désirée provoque de l\'anxiété. Voici comment en parler. »',
+      title:       t('landing.pillarChatbotTitle'),
+      tagline:     t('landing.pillarChatbotTagline'),
+      description: t('landing.pillarChatbotDesc'),
+      bullets: [
+        t('landing.pillarChatbotBullet1'),
+        t('landing.pillarChatbotBullet2'),
+        t('landing.pillarChatbotBullet3'),
+      ],
+      outro: t('landing.pillarChatbotOutro'),
     },
     {
       id: 'apprendre',
       icon: GraduationCap,
       emoji: '🎮',
       tone: 'accent',
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? '2. The gamified learning space'
-        : '2. L\'espace d\'apprentissage gamifié',
-      tagline: t('landing.problemEyebrow') === 'The problem'
-        ? 'Learn like you play'
-        : 'Apprendre comme on joue',
-      description: t('landing.problemEyebrow') === 'The problem'
-        ? "Short mini-courses, quizzes, badges and a leaderboard. Learning becomes a rewarding experience, even for young people no longer in school - with digital certificates at the end."
-        : "Des mini-cours courts, des quiz, des badges et un classement. L'apprentissage devient une expérience valorisante, y compris pour les jeunes qui ne sont plus à l'école - avec des certificats numériques à la clé.",
-      bullets: t('landing.problemEyebrow') === 'The problem'
-        ? [
-            '3 to 7 minute courses, readable even on a small data plan',
-            'Points, badges and leaderboard to stay motivated',
-            'Digital certificate at the end of each course',
-          ]
-        : [
-            'Cours de 3 à 7 minutes, lisibles même sur un petit forfait',
-            'Points, badges et classement pour garder la motivation',
-            'Certificat numérique à la fin de chaque parcours',
-          ],
-      outro: t('landing.problemEyebrow') === 'The problem'
-        ? 'Result: young people who come back, finish and share what they\'ve learned.'
-        : 'Résultat : des jeunes qui reviennent, terminent et repartagent ce qu\'ils ont appris.',
+      title:       t('landing.pillarLearnTitle'),
+      tagline:     t('landing.pillarLearnTagline'),
+      description: t('landing.pillarLearnDesc'),
+      bullets: [
+        t('landing.pillarLearnBullet1'),
+        t('landing.pillarLearnBullet2'),
+        t('landing.pillarLearnBullet3'),
+      ],
+      outro: t('landing.pillarLearnOutro'),
     },
     {
       id: 'communaute',
       icon: Users,
       emoji: '🤝',
       tone: 'warm',
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? '3. The community and peer support space'
-        : '3. L\'espace communautaire et d\'écoute',
-      tagline: t('landing.problemEyebrow') === 'The problem'
-        ? 'Breaking isolation, together'
-        : 'Briser l\'isolement, ensemble',
-      description: t('landing.problemEyebrow') === 'The problem'
-        ? "A moderated forum where you can share anonymously, share your experience and find support. And above all: privately contact a midwife, psychologist or nurse without going to a health centre."
-        : "Un forum modéré où l'on peut se confier en anonyme, partager son expérience et trouver du soutien. Et surtout : contacter en privé une sage-femme, une psychologue ou un infirmier sans se déplacer au centre de santé.",
-      bullets: t('landing.problemEyebrow') === 'The problem'
-        ? [
-            'Anonymous questions and stable pseudonyms',
-            'Human moderation + one-click reporting',
-            'Confidential connection with health professionals',
-          ]
-        : [
-            'Questions anonymes et pseudonymes stables',
-            'Modération humaine formée + signalement en un clic',
-            'Mise en relation confidentielle avec des professionnels de santé',
-          ],
-      outro: t('landing.problemEyebrow') === 'The problem'
-        ? '"I\'m no longer alone facing my doubts."'
-        : '« Je ne suis plus seul·e face à mes doutes. »',
+      title:       t('landing.pillarCommunityTitle'),
+      tagline:     t('landing.pillarCommunityTagline'),
+      description: t('landing.pillarCommunityDesc'),
+      bullets: [
+        t('landing.pillarCommunityBullet1'),
+        t('landing.pillarCommunityBullet2'),
+        t('landing.pillarCommunityBullet3'),
+      ],
+      outro: t('landing.pillarCommunityOutro'),
     },
     {
       id: 'campagnes',
       icon: Megaphone,
       emoji: '📣',
       tone: 'info',
-      title: t('landing.problemEyebrow') === 'The problem'
-        ? '4. Community engagement, beyond the screen'
-        : '4. L\'engagement communautaire, hors de l\'écran',
-      tagline: t('landing.problemEyebrow') === 'The problem'
-        ? 'A continuous presence in real life'
-        : 'Une présence continue dans la vraie vie',
-      description: t('landing.problemEyebrow') === 'The problem'
-        ? "A WhatsApp group animated daily with partner professionals, and a monthly thematic awareness campaign: contraception, mental health, screening, consent... relayed on radio and social media."
-        : "Un groupe WhatsApp animé chaque jour avec des professionnels partenaires, et une campagne de sensibilisation thématique chaque mois : contraception, santé mentale, dépistage, consentement... relayée à la radio et sur les réseaux sociaux.",
-      bullets: t('landing.problemEyebrow') === 'The problem'
-        ? [
-            'WhatsApp peer support group animated daily',
-            'One national campaign per month with young leaders',
-            'Radio relay and posters in schools and health centres',
-          ]
-        : [
-            'Groupe WhatsApp d\'entraide animé quotidiennement',
-            'Une campagne nationale chaque mois avec les jeunes leaders',
-            'Relais radio et affiches dans les lycées et centres de santé',
-          ],
-      outro: t('landing.problemEyebrow') === 'The problem'
-        ? 'We talk to young people where they already live.'
-        : 'Nous parlons aux jeunes là où ils vivent déjà.',
+      title:       t('landing.pillarCampaignsTitle'),
+      tagline:     t('landing.pillarCampaignsTagline'),
+      description: t('landing.pillarCampaignsDesc'),
+      bullets: [
+        t('landing.pillarCampaignsBullet1'),
+        t('landing.pillarCampaignsBullet2'),
+        t('landing.pillarCampaignsBullet3'),
+      ],
+      outro: t('landing.pillarCampaignsOutro'),
     },
   ];
 
