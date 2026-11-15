@@ -23,10 +23,10 @@ import './Login.css';
  * Ils servent à pré-remplir le formulaire lors d'une démonstration.
  */
 const DEMO_ACCOUNTS = [
-  { name: 'Awa', email: 'awa@wetoo.bj', avatar: '🌸', meta: '20 ans · Littoral' },
-  { name: 'Rodrigue', email: 'rodrigue@wetoo.bj', avatar: '⚽', meta: '23 ans · Atlantique' },
-  { name: 'Grâce', email: 'grace@wetoo.bj', avatar: '📚', meta: '19 ans · Ouémé' },
-  { name: 'Sessi', email: 'sessi@wetoo.bj', avatar: '🎨', meta: '25 ans · Zou' },
+  { name: 'Awa', email: 'awa@wetoo.bj', avatar: '🌸', age: 20, region: 'Littoral' },
+  { name: 'Rodrigue', email: 'rodrigue@wetoo.bj', avatar: '⚽', age: 23, region: 'Atlantique' },
+  { name: 'Grâce', email: 'grace@wetoo.bj', avatar: '📚', age: 19, region: 'Ouémé' },
+  { name: 'Sessi', email: 'sessi@wetoo.bj', avatar: '🎨', age: 25, region: 'Zou' },
 ];
 
 const DEMO_PASSWORD = 'wetoo123';
@@ -220,7 +220,7 @@ export default function Login() {
                         <strong>{account.name}</strong>
                         <span>{account.email}</span>
                       </span>
-                      <span className="login-page__demo-meta">{account.meta}</span>
+                      <span className="login-page__demo-meta">{t('login.demoMeta')(account.age, account.region)}</span>
                     </button>
                   </li>
                 ))}

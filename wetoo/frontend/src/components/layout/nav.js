@@ -8,19 +8,24 @@ import {
   Sparkles,
   LifeBuoy,
   User,
+  ClipboardCheck,
+  Trophy,
 } from 'lucide-react';
 
-/** Navigation principale de la plateforme. */
+/** Navigation principale de la plateforme (menu complet). */
 export function getAppNav(t) {
   return [
     { to: '/app',            label: t('nav.home'),        short: t('nav.home'),         icon: Home,         end: true },
     { to: '/app/chat',       label: t('nav.askQuestion'), short: t('nav.chat'),          icon: MessageCircle },
     { to: '/app/apprendre',  label: t('nav.learn'),       short: t('nav.learn'),         icon: GraduationCap },
+    { to: '/app/quiz',       label: t('nav.quiz'),        short: t('nav.quiz'),          icon: ClipboardCheck },
     { to: '/app/communaute', label: t('nav.community'),   short: t('nav.community'),     icon: Users },
     { to: '/app/campagnes',  label: t('nav.campaigns'),   short: t('nav.campaigns'),     icon: Megaphone },
     { to: '/app/expertes',   label: t('nav.experts'),     short: t('nav.expertsShort'),  icon: Stethoscope },
     { to: '/app/mythes',     label: t('nav.myths'),       short: t('nav.mythsShort'),    icon: Sparkles },
     { to: '/app/ressources', label: t('nav.help'),        short: t('nav.helpShort'),     icon: LifeBuoy },
+    { to: '/app/classement', label: t('nav.leaderboard'), short: t('nav.leaderboard'),   icon: Trophy },
+    { to: '/app/profil',     label: t('nav.profile'),     short: t('nav.profile'),       icon: User,         end: true },
   ];
 }
 

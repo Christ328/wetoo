@@ -31,20 +31,22 @@ import { PostCard } from '../components/domain/PostCard.jsx';
 import { useApi } from '../lib/useApi.js';
 import { api } from '../lib/api.js';
 import { useToast } from '../context/ToastContext.jsx';
+import { useLang } from '../context/LangContext.jsx';
 import { useRequireAuth } from '../lib/useRequireAuth.js';
 import './Community.css';
-
-const SORT_TABS = [
-  { id: 'recent', label: 'Récentes', icon: Clock },
-  { id: 'popular', label: 'Populaires', icon: Flame },
-];
 
 const EMPTY_FORM = { title: '', category: '', body: '', anonymous: false };
 
 /** Page du forum communautaire : liste, filtres, création et signalement. */
 export default function Community() {
   const toast = useToast();
+  const { t } = useLang();
   const requireAuth = useRequireAuth();
+
+  const sortTabs = [
+    { id: 'recent', label: t('community.sortRecent'), icon: Clock },
+    { id: 'popular', label: t('community.sortPopular'), icon: Flame },
+  ];
 
   // --- Filtres de la liste ---
   const [category, setCategory] = useState('');
@@ -100,15 +102,15 @@ export default function Community() {
     event.preventDefault();
     if (submitting) return;
     if (form.title.trim().length < 5) {
-      toast.error('Le titre doit contenir au moins 5 caractères.');
+      toast.error(t('community.validTitleMin'));
       return;
     }
     if (!form.category) {
-      toast.error('Choisis une catégorie.');
+      toast.error(t('community.validCatReq'));
       return;
     }
     if (form.body.trim().length < 10) {
-      toast.error('Le message doit contenir au moins 10 caractères.');
+      toast.error(t('community.validBodyMin'));
       return;
     }
 
@@ -120,7 +122,7 @@ export default function Community() {
         category: form.category,
         anonymous: form.anonymous,
       });
-      toast.success(result?.message || 'Ta discussion a été publiée. Merci pour ta contribution !');
+      toast.success(t('community.toastPublished')(result?.message));
       setComposerOpen(false);
       setForm(EMPTY_FORM);
       postsApi.refetch();
@@ -135,7 +137,7 @@ export default function Community() {
     requireAuth(async () => {
       try {
         await api.post(`/community/posts/${post.id}/react`, { type });
-        toast.success(type === 'support' ? 'Merci pour ton soutien !' : 'Merci, ton avis compte !');
+        toast.success(type === 'support' ? t('community.toastSupport') : t('community.toastVote'));
         postsApi.refetch();
       } catch (err) {
         toast.error(err?.message || 'Action impossible pour le moment.');
@@ -154,7 +156,7 @@ export default function Community() {
     event.preventDefault();
     if (!reportTarget || reporting) return;
     if (reportReason.trim().length < 3) {
-      toast.error('Merci d’indiquer la raison du signalement.');
+      toast.error(t('community.validReportMin'));
       return;
     }
     setReporting(true);
@@ -162,7 +164,7 @@ export default function Community() {
       const result = await api.post(`/community/posts/${reportTarget.id}/report`, {
         reason: reportReason.trim(),
       });
-      toast.success(result?.message || 'Merci, ton signalement a été transmis à notre équipe.');
+      toast.success(t('community.toastReported')(result?.message));
       setReportTarget(null);
       setReportReason('');
     } catch (err) {
@@ -176,13 +178,13 @@ export default function Community() {
   return (
     <div className="community-page">
       <PageHeader
-        eyebrow="Entraide entre jeunes"
-        title="Communauté"
-        description="Pose ta question, partage ton expérience, soutiens les autres - en anonyme si tu préfères."
+        eyebrow={t('community.eyebrow')}
+        title={t('community.title')}
+        description={t('community.desc')}
         icon={MessageCircle}
         actions={
           <Button icon={Plus} onClick={openComposer}>
-            Nouvelle discussion
+            {t('community.newPost')}
           </Button>
         }
       />
@@ -194,15 +196,15 @@ export default function Community() {
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Rechercher une discussion…"
-            aria-label="Rechercher une discussion"
+            placeholder={t('community.searchPlaceholder')}
+            aria-label={t('community.searchAria')}
             className="community-page__search-input"
           />
         </div>
 
-        <div className="community-page__chips tag-row" role="group" aria-label="Filtrer par catégorie">
+        <div className="community-page__chips tag-row" role="group" aria-label={t('community.filterByCat')}>
           <Chip selected={category === ''} onClick={() => setCategory('')}>
-            Toutes
+            {t('community.filterAll')}
           </Chip>
           {categories.map((cat) => (
             <Chip
@@ -220,29 +222,29 @@ export default function Community() {
       <div className="community-page__layout">
         <div className="community-page__main">
           <Tabs
-            items={SORT_TABS}
+            items={sortTabs}
             value={sort}
             onChange={setSort}
-            ariaLabel="Trier les discussions"
+            ariaLabel={t('community.sortAria')}
           />
 
           {postsApi.loading ? (
-            <LoadingState label="Chargement des discussions…" />
+            <LoadingState label={t('community.loadingPosts')} />
           ) : postsApi.error ? (
             <ErrorState error={postsApi.error} onRetry={postsApi.refetch} />
           ) : posts.length === 0 ? (
             <EmptyState
               icon={MessageCircle}
-              title="Aucune discussion pour l’instant"
-              description="Sois la première personne à lancer un sujet. Ton message peut vraiment aider quelqu’un."
+              title={t('community.noPostTitle')}
+              description={t('community.noPostDesc')}
               action={
                 <Button icon={Plus} onClick={openComposer}>
-                  Lancer une discussion
+                  {t('community.launchPost')}
                 </Button>
               }
             />
           ) : (
-            <ul className="community-page__posts stack stagger" aria-label="Liste des discussions">
+            <ul className="community-page__posts stack stagger" aria-label={t('community.listAria')}>
               {posts.map((post) => (
                 <li key={post.id}>
                   <PostCard post={post} onReact={handleReact} onReport={openReport} />
@@ -252,16 +254,16 @@ export default function Community() {
           )}
         </div>
 
-        <aside className="community-page__sidebar stack" aria-label="Informations complémentaires">
+        <aside className="community-page__sidebar stack" aria-label={t('community.sidebarAria')}>
           <Card tone="soft">
             <CardHeader
-              title="Rejoins le groupe WhatsApp"
-              subtitle="Une entraide quotidienne, près de chez toi."
+              title={t('community.whatsappTitle')}
+              subtitle={t('community.whatsappSub')}
               icon={Users}
             />
             <CardBody>
               {whatsappApi.loading ? (
-                <LoadingState label="Chargement du groupe…" />
+                <LoadingState label={t('community.loadingGroup')} />
               ) : whatsappApi.error ? (
                 <ErrorState error={whatsappApi.error} onRetry={whatsappApi.refetch} />
               ) : whatsapp ? (
@@ -271,7 +273,7 @@ export default function Community() {
                       <li key={group.id} className="community-page__group">
                         <span className="community-page__group-name">{group.name}</span>
                         <span className="text-subtle community-page__group-meta">
-                          {group.members} membres
+                          {t('community.members')(group.members)}
                         </span>
                         <p className="community-page__group-desc clamp-2">{group.description}</p>
                       </li>
@@ -280,7 +282,7 @@ export default function Community() {
 
                   {whatsapp.rules?.length ? (
                     <>
-                      <p className="community-page__subtitle">Règles du groupe</p>
+                      <p className="community-page__subtitle">{t('community.groupRules')}</p>
                       <ul className="community-page__rules stack">
                         {whatsapp.rules.map((rule) => (
                           <li key={rule}>{rule}</li>
@@ -295,7 +297,7 @@ export default function Community() {
                     icon={ExternalLink}
                     block
                   >
-                    Rejoindre le groupe
+                    {t('community.joinGroup')}
                   </Button>
                 </>
               ) : null}
@@ -304,22 +306,20 @@ export default function Community() {
 
           <Card tone="outline">
             <CardHeader
-              title="Modération et sécurité"
-              subtitle="Ta sécurité passe avant tout."
+              title={t('community.modTitle')}
+              subtitle={t('community.modSub')}
               icon={ShieldCheck}
             />
             <CardBody>
               <ul className="community-page__rules stack">
                 <li>
-                  <strong>Anonymat&nbsp;:</strong> tu peux publier sans donner ton nom.
+                  <strong>{t('community.modAnon')}</strong> {t('community.modAnonText')}
                 </li>
                 <li>
-                  <strong>Signalement&nbsp;:</strong> signale toute publication qui te semble
-                  irrespectueuse ou dangereuse.
+                  <strong>{t('community.modReport')}</strong> {t('community.modReportText')}
                 </li>
                 <li>
-                  <strong>Modération humaine&nbsp;:</strong> une équipe relit les contenus
-                  sensibles et intervient si besoin.
+                  <strong>{t('community.modHuman')}</strong> {t('community.modHumanText')}
                 </li>
               </ul>
             </CardBody>
@@ -331,28 +331,28 @@ export default function Community() {
       <Modal
         open={composerOpen}
         onClose={() => setComposerOpen(false)}
-        title="Nouvelle discussion"
-        description="Partage ce que tu veux, en anonyme si tu préfères. Reste bienveillant·e."
+        title={t('community.composerTitle')}
+        description={t('community.composerDesc')}
       >
         <form className="community-page__form stack" onSubmit={submitPost}>
-          <Field label="Titre" htmlFor="post-title" required>
+          <Field label={t('community.fieldTitle')} htmlFor="post-title" required>
             <Input
               id="post-title"
               data-autofocus
               value={form.title}
               onChange={(event) => setForm((prev) => ({ ...prev, title: event.target.value }))}
-              placeholder="Résume ta question en une phrase"
+              placeholder={t('community.fieldTitlePH')}
               maxLength={140}
             />
           </Field>
 
-          <Field label="Catégorie" htmlFor="post-category" required>
+          <Field label={t('community.fieldCat')} htmlFor="post-category" required>
             <Select
               id="post-category"
               value={form.category}
               onChange={(event) => setForm((prev) => ({ ...prev, category: event.target.value }))}
             >
-              <option value="">Choisir une catégorie…</option>
+              <option value="">{t('community.fieldCatPH')}</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.label}
@@ -362,17 +362,17 @@ export default function Community() {
           </Field>
 
           <Field
-            label="Message"
+            label={t('community.fieldBody')}
             htmlFor="post-body"
             required
-            hint="Minimum 10 caractères. Ne partage pas d’informations personnelles identifiantes."
+            hint={t('community.fieldBodyHint')}
           >
             <Textarea
               id="post-body"
               rows={6}
               value={form.body}
               onChange={(event) => setForm((prev) => ({ ...prev, body: event.target.value }))}
-              placeholder="Explique ta situation ou ta question…"
+              placeholder={t('community.fieldBodyPH')}
               maxLength={2000}
             />
           </Field>
@@ -386,23 +386,20 @@ export default function Community() {
                 setForm((prev) => ({ ...prev, anonymous: event.target.checked }))
               }
             />
-            <span>Publier en anonyme</span>
+            <span>{t('community.checkAnon')}</span>
           </label>
 
           <div className="community-page__note">
             <HeartHandshake size={18} aria-hidden="true" />
-            <p>
-              Bienveillance&nbsp;: pas de jugement, pas de diagnostic médical, pas de données
-              personnelles sur les autres.
-            </p>
+            <p>{t('community.kindnessNote')}</p>
           </div>
 
           <div className="community-page__form-actions">
             <Button variant="ghost" onClick={() => setComposerOpen(false)}>
-              Annuler
+              {t('community.cancel')}
             </Button>
             <Button type="submit" loading={submitting} icon={Plus}>
-              Publier
+              {t('community.publish')}
             </Button>
           </div>
         </form>
@@ -412,16 +409,16 @@ export default function Community() {
       <Modal
         open={Boolean(reportTarget)}
         onClose={() => setReportTarget(null)}
-        title="Signaler cette publication"
-        description="Ton signalement est anonyme et sera étudié par notre équipe de modération."
+        title={t('community.reportTitle')}
+        description={t('community.reportDesc')}
         size="sm"
       >
         <form className="community-page__form stack" onSubmit={submitReport}>
           <Field
-            label="Raison du signalement"
+            label={t('community.reportField')}
             htmlFor="report-reason"
             required
-            hint="Exemple : propos irrespectueux, contenu dangereux, harcèlement…"
+            hint={t('community.reportHint')}
           >
             <Textarea
               id="report-reason"
@@ -429,17 +426,17 @@ export default function Community() {
               rows={4}
               value={reportReason}
               onChange={(event) => setReportReason(event.target.value)}
-              placeholder="Explique en quelques mots…"
+              placeholder={t('community.reportPH')}
               maxLength={500}
             />
           </Field>
 
           <div className="community-page__form-actions">
             <Button variant="ghost" onClick={() => setReportTarget(null)}>
-              Annuler
+              {t('community.cancel')}
             </Button>
             <Button type="submit" variant="danger" loading={reporting}>
-              Envoyer le signalement
+              {t('community.reportSend')}
             </Button>
           </div>
         </form>

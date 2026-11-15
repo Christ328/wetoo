@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   UserRound,
@@ -30,16 +30,11 @@ import { useAuth } from '../context/AuthContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
 import { formatDate } from '../lib/format.js';
+import { useLang } from '../context/LangContext.jsx';
 import './Profile.css';
 
 /** Avatars proposés (identiques à ceux du backend). */
 const AVATARS = ['🙂', '🌸', '⚽', '📚', '🎨', '🌻', '🔥', '💙', '🌈', '🎧'];
-
-const GENDER_OPTIONS = [
-  { value: 'fille', label: 'Fille' },
-  { value: 'garçon', label: 'Garçon' },
-  { value: 'autre', label: 'Autre' },
-];
 
 const REGIONS = [
   'Alibori',
@@ -54,21 +49,6 @@ const REGIONS = [
   'Ouémé',
   'Plateau',
   'Zou',
-];
-
-const INTEREST_OPTIONS = [
-  'Santé mentale',
-  'Contraception',
-  'IST',
-  'Consentement',
-  'Puberté',
-  'Bien-être numérique',
-];
-
-const TABS = [
-  { id: 'profil', label: 'Mon profil', icon: UserRound },
-  { id: 'badges', label: 'Mes badges', icon: Award },
-  { id: 'reglages', label: 'Réglages', icon: Settings },
 ];
 
 /** Petite tuile de statistique. */
@@ -89,6 +69,21 @@ export default function Profile() {
   const toast = useToast();
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
+  const { t, lang } = useLang();
+
+  const genderOptions = [
+    { value: 'fille', label: t('profile.genderGirl') },
+    { value: 'garçon', label: t('profile.genderBoy') },
+    { value: 'autre', label: t('profile.genderOther') },
+  ];
+
+  const tabs = [
+    { id: 'profil', label: t('profile.tabProfile'), icon: UserRound },
+    { id: 'badges', label: t('profile.tabBadges'), icon: Award },
+    { id: 'reglages', label: t('profile.tabSettings'), icon: Settings },
+  ];
+
+  const baseInterestOptions = t('profile.interestOptions');
 
   const [tab, setTab] = useState('profil');
   const [saving, setSaving] = useState(false);
@@ -122,9 +117,9 @@ export default function Profile() {
 
   // Options d'intérêt : la liste de base + d'éventuels intérêts existants hors liste.
   const interestOptions = useMemo(() => {
-    const existing = (user?.interests || []).filter((i) => !INTEREST_OPTIONS.includes(i));
-    return [...INTEREST_OPTIONS, ...existing];
-  }, [user]);
+    const existing = (user?.interests || []).filter((i) => !baseInterestOptions.includes(i));
+    return [...baseInterestOptions, ...existing];
+  }, [user, baseInterestOptions]);
 
   function setField(key, value) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -143,15 +138,15 @@ export default function Profile() {
   async function handleSave(event) {
     event.preventDefault();
     const nextErrors = {};
-    if (form.name.trim().length < 2) nextErrors.name = 'Le nom doit contenir au moins 2 caractères.';
+    if (form.name.trim().length < 2) nextErrors.name = t('profile.validNameMin');
     if (form.age !== '' && form.age !== null) {
       const n = Number(form.age);
-      if (!Number.isInteger(n)) nextErrors.age = "L'âge doit être un nombre entier.";
-      else if (n < 18 || n > 29) nextErrors.age = "L'âge doit être compris entre 18 et 29 ans.";
+      if (!Number.isInteger(n)) nextErrors.age = t('profile.validAgeInt');
+      else if (n < 18 || n > 29) nextErrors.age = t('profile.validAgeRange');
     }
     if (Object.keys(nextErrors).length) {
       setErrors(nextErrors);
-      toast.warning('Vérifie les champs signalés.');
+      toast.warning(t('profile.toastWarning'));
       return;
     }
 
@@ -166,7 +161,7 @@ export default function Profile() {
         avatar: form.avatar,
         interests: form.interests,
       });
-      toast.success('Profil mis à jour !');
+      toast.success(t('profile.toastSaved'));
       me.refetch();
     } catch (err) {
       const map = {
@@ -178,7 +173,7 @@ export default function Profile() {
       };
       const field = map[err.code];
       if (field) setErrors({ [field]: err.message });
-      toast.error(err.message || 'Impossible de mettre à jour le profil.');
+      toast.error(t('profile.toastError')(err.message));
     } finally {
       setSaving(false);
     }
@@ -193,7 +188,7 @@ export default function Profile() {
   if (authLoading) {
     return (
       <div className="profile-page">
-        <LoadingState label="Chargement de ton profil…" />
+        <LoadingState label={t('profile.loadingProfile')} />
       </div>
     );
   }
@@ -203,11 +198,11 @@ export default function Profile() {
       <div className="profile-page">
         <EmptyState
           icon={UserRound}
-          title="Connecte-toi pour voir ton profil"
-          description="Ton niveau, tes badges et tes réglages sont personnels : crée un compte gratuit pour les retrouver."
+          title={t('profile.notAuthTitle')}
+          description={t('profile.notAuthDesc')}
           action={
             <Button to="/connexion" icon={UserRound}>
-              Se connecter
+              {t('profile.signInBtn')}
             </Button>
           }
         />
@@ -217,7 +212,7 @@ export default function Profile() {
 
   // Statistiques (gamification prioritaire, sinon valeurs du profil).
   const points = me.data?.points ?? user?.points ?? 0;
-  const levelName = me.data?.levelName ?? user?.levelName ?? 'Débutant·e';
+  const levelName = me.data?.levelName ?? user?.levelName ?? t('learn.levelBeginner');
   const rank = me.data?.rank;
   const streak = me.data?.streak ?? user?.streak ?? 0;
   const lessonsCount = me.data?.completedLessonsCount ?? (user?.completedLessons?.length || 0);
@@ -227,20 +222,20 @@ export default function Profile() {
   return (
     <div className="profile-page">
       <PageHeader
-        eyebrow="Mon espace"
-        title="Mon compte"
-        description="Gère ton profil, découvre tes badges et personnalise ton expérience."
+        eyebrow={t('profile.eyebrow')}
+        title={t('profile.title')}
+        description={t('profile.desc')}
         icon={UserRound}
       />
 
       <Tabs
-        items={TABS.map((t) => ({
-          ...t,
-          badge: t.id === 'badges' && me.data ? me.data.badges.length : undefined,
+        items={tabs.map((item) => ({
+          ...item,
+          badge: item.id === 'badges' && me.data ? me.data.badges.length : undefined,
         }))}
         value={tab}
         onChange={setTab}
-        ariaLabel="Sections du profil"
+        ariaLabel={t('profile.tabsAria')}
         variant="pill"
       />
 
@@ -258,18 +253,20 @@ export default function Profile() {
                   {user?.region ? ` · ${user.region}` : ''}
                 </p>
                 {user?.createdAt ? (
-                  <p className="profile-page__since">Membre depuis le {formatDate(user.createdAt)}</p>
+                  <p className="profile-page__since">
+                    {t('profile.memberSince')(formatDate(user.createdAt, lang))}
+                  </p>
                 ) : null}
               </div>
             </div>
             <div className="profile-page__stats">
-              <Stat icon={Star} value={points} label="points" />
-              <Stat icon={Trophy} value={rank ? `#${rank}` : '—'} label="rang" />
-              <Stat icon={Flame} value={streak} label="série (jours)" />
-              <Stat icon={BookOpen} value={lessonsCount} label="cours terminés" />
+              <Stat icon={Star} value={points} label={t('profile.statPoints')} />
+              <Stat icon={Trophy} value={rank ? `#${rank}` : '—'} label={t('profile.statRank')} />
+              <Stat icon={Flame} value={streak} label={t('profile.statStreak')} />
+              <Stat icon={BookOpen} value={lessonsCount} label={t('profile.statLessons')} />
             </div>
             <Button to="/app/classement" variant="outline" size="sm" icon={Trophy}>
-              Voir le classement complet
+              {t('profile.seeLeaderboard')}
             </Button>
           </Card>
 
@@ -277,8 +274,8 @@ export default function Profile() {
           <Card padding="lg" className="profile-page__form-card">
             <form className="profile-page__form" onSubmit={handleSave} noValidate>
               <fieldset className="profile-page__fieldset">
-                <legend className="profile-page__legend">Choisis ton avatar</legend>
-                <div className="profile-page__avatars" role="group" aria-label="Choix de l'avatar">
+                <legend className="profile-page__legend">{t('profile.avatarLegend')}</legend>
+                <div className="profile-page__avatars" role="group" aria-label={t('profile.avatarAria')}>
                   {AVATARS.map((emoji) => {
                     const selected = form.avatar === emoji;
                     return (
@@ -287,7 +284,7 @@ export default function Profile() {
                         type="button"
                         className={`profile-page__avatar-option ${selected ? 'is-selected' : ''}`}
                         aria-pressed={selected}
-                        aria-label={`Avatar ${emoji}`}
+                        aria-label={t('profile.avatarLabel')(emoji)}
                         onClick={() => setField('avatar', emoji)}
                       >
                         <span aria-hidden="true">{emoji}</span>
@@ -300,7 +297,7 @@ export default function Profile() {
                 </div>
               </fieldset>
 
-              <Field label="Nom complet" required htmlFor="profile-name" error={errors.name}>
+              <Field label={t('profile.nameLabel')} required htmlFor="profile-name" error={errors.name}>
                 <Input
                   id="profile-name"
                   name="name"
@@ -312,10 +309,10 @@ export default function Profile() {
               </Field>
 
               <Field
-                label="Âge"
+                label={t('profile.ageLabel')}
                 htmlFor="profile-age"
                 error={errors.age}
-                hint="Entre 18 et 29 ans - reste confidentiel."
+                hint={t('profile.ageHint')}
               >
                 <Input
                   id="profile-age"
@@ -333,21 +330,21 @@ export default function Profile() {
               <div className="profile-page__field">
                 <RadioPills
                   name="profile-gender"
-                  legend="Genre"
-                  options={GENDER_OPTIONS}
+                  legend={t('profile.genderLegend')}
+                  options={genderOptions}
                   value={form.gender}
                   onChange={(v) => setField('gender', v)}
                 />
               </div>
 
-              <Field label="Département" htmlFor="profile-region">
+              <Field label={t('profile.regionLabel')} htmlFor="profile-region">
                 <Select
                   id="profile-region"
                   name="region"
                   value={form.region}
                   onChange={(e) => setField('region', e.target.value)}
                 >
-                  <option value="">Non précisé</option>
+                  <option value="">{t('profile.regionDefault')}</option>
                   {REGIONS.map((r) => (
                     <option key={r} value={r}>
                       {r}
@@ -357,8 +354,8 @@ export default function Profile() {
               </Field>
 
               <div className="profile-page__field">
-                <p className="profile-page__field-label">Centres d'intérêt</p>
-                <div className="profile-page__chips" role="group" aria-label="Centres d'intérêt">
+                <p className="profile-page__field-label">{t('profile.interestsLabel')}</p>
+                <div className="profile-page__chips" role="group" aria-label={t('profile.interestsAria')}>
                   {interestOptions.map((label) => (
                     <Chip
                       key={label}
@@ -373,7 +370,7 @@ export default function Profile() {
 
               <div className="profile-page__form-actions">
                 <Button type="submit" loading={saving} icon={Save}>
-                  Enregistrer les modifications
+                  {t('profile.save')}
                 </Button>
               </div>
             </form>
@@ -385,17 +382,15 @@ export default function Profile() {
       {tab === 'badges' ? (
         <div className="profile-page__tab">
           {me.loading || badges.loading ? (
-            <LoadingState label="Chargement de tes badges…" />
+            <LoadingState label={t('profile.loadingBadges')} />
           ) : badges.error ? (
             <ErrorState error={badges.error} onRetry={badges.refetch} />
           ) : (badges.data || []).length === 0 ? (
-            <EmptyState icon={Award} title="Aucun badge disponible" />
+            <EmptyState icon={Award} title={t('profile.noBadgeTitle')} />
           ) : (
             <>
               <p className="profile-page__badges-intro">
-                Tu as obtenu <strong>{obtainedIds.size}</strong> badge
-                {obtainedIds.size > 1 ? 's' : ''} sur {badges.data.length}. Termine des cours, réussis
-                des quiz et participe pour débloquer les autres.
+                {t('profile.badgesIntro')(obtainedIds.size, badges.data.length)}
               </p>
               <div className="grid grid-3 profile-page__badges">
                 {badges.data.map((badge) => {
@@ -412,18 +407,18 @@ export default function Profile() {
                         </span>
                         {obtained ? (
                           <Badge tone="success" size="sm" icon={CheckCircle2}>
-                            Obtenu
+                            {t('profile.obtainedBadge')}
                           </Badge>
                         ) : (
                           <Badge tone="neutral" size="sm" icon={Lock}>
-                            À débloquer
+                            {t('profile.lockedBadge')}
                           </Badge>
                         )}
                       </div>
                       <h3 className="profile-page__badge-name">{badge.name}</h3>
                       <p className="profile-page__badge-desc">{badge.description}</p>
                       <p className="profile-page__badge-criteria">
-                        <span>Comment l'obtenir :</span> {badge.criteria}
+                        <span>{t('profile.criteriaLabel')}</span> {badge.criteria}
                       </p>
                     </Card>
                   );
@@ -445,11 +440,11 @@ export default function Profile() {
                   <Sparkles size={20} />
                 </span>
                 <div>
-                  <h2 className="profile-page__setting-title">Apparence</h2>
-                  <p className="text-muted">Choisis le thème qui te met le plus à l'aise.</p>
+                  <h2 className="profile-page__setting-title">{t('profile.appearanceTitle')}</h2>
+                  <p className="text-muted">{t('profile.appearanceSub')}</p>
                 </div>
               </div>
-              <div className="profile-page__theme" role="group" aria-label="Choix du thème">
+              <div className="profile-page__theme" role="group" aria-label={t('profile.themeGroupAria')}>
                 <button
                   type="button"
                   className={`profile-page__theme-btn ${theme === 'light' ? 'is-selected' : ''}`}
@@ -457,7 +452,7 @@ export default function Profile() {
                   onClick={() => setTheme('light')}
                 >
                   <Sun size={20} aria-hidden="true" />
-                  Clair
+                  {t('profile.themeLight')}
                 </button>
                 <button
                   type="button"
@@ -466,7 +461,7 @@ export default function Profile() {
                   onClick={() => setTheme('dark')}
                 >
                   <Moon size={20} aria-hidden="true" />
-                  Sombre
+                  {t('profile.themeDark')}
                 </button>
               </div>
             </div>
@@ -480,12 +475,8 @@ export default function Profile() {
                   <ShieldCheck size={20} />
                 </span>
                 <div>
-                  <h2 className="profile-page__setting-title">Mode hors ligne</h2>
-                  <p className="text-muted">
-                    Nous travaillons sur un accès hors ligne pour les zones à faible connexion.
-                    Aujourd’hui, la plateforme nécessite une connexion internet - aucune donnée
-                    n’est stockée sur ton appareil.
-                  </p>
+                  <h2 className="profile-page__setting-title">{t('profile.offlineTitle')}</h2>
+                  <p className="text-muted">{t('profile.offlineText')}</p>
                 </div>
               </div>
             </div>
@@ -499,14 +490,12 @@ export default function Profile() {
                   <LogOut size={20} />
                 </span>
                 <div>
-                  <h2 className="profile-page__setting-title">Se déconnecter</h2>
-                  <p className="text-muted">
-                    Tu pourras te reconnecter plus tard : tes points et tes badges sont conservés.
-                  </p>
+                  <h2 className="profile-page__setting-title">{t('profile.logoutTitle')}</h2>
+                  <p className="text-muted">{t('profile.logoutText')}</p>
                 </div>
               </div>
               <Button variant="danger" icon={LogOut} onClick={handleLogout}>
-                Se déconnecter
+                {t('profile.logoutBtn')}
               </Button>
             </div>
           </Card>

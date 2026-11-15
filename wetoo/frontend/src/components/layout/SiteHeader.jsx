@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Logo } from '../brand/Logo.jsx';
@@ -110,36 +111,62 @@ export function SiteHeader({ variant = 'app' }) {
         </div>
       </div>
 
-      {drawerOpen ? (
-        <div className="drawer" ref={drawerRef}>
-          <div className="drawer__overlay" onClick={() => setDrawerOpen(false)} aria-hidden="true" />
-          <nav className="drawer__panel" aria-label={t('nav.ariaMenu')}>
-            <ul className="drawer__list">
-              {(variant === 'marketing' ? marketingNav : appNav).map((item) => {
-                const Icon = item.icon;
-                if (variant === 'marketing') {
-                  return (
+      {drawerOpen
+        ? createPortal(
+            <div className="drawer" ref={drawerRef}>
+              <div className="drawer__overlay" onClick={() => setDrawerOpen(false)} aria-hidden="true" />
+              <nav className="drawer__panel" aria-label={t('nav.ariaMenu')}>
+            {/* Sur le site vitrine : les sections de la page puis tout le menu de la plateforme. */}
+            {variant === 'marketing' ? (
+              <>
+                <p className="drawer__section-title">{t('header.menuSections')}</p>
+                <ul className="drawer__list">
+                  {marketingNav.map((item) => (
                     <li key={item.href}>
                       <a href={item.href} className="drawer__link" onClick={() => setDrawerOpen(false)}>
                         {item.label}
                       </a>
                     </li>
+                  ))}
+                </ul>
+                <p className="drawer__section-title">{t('header.menuPlatform')}</p>
+                <ul className="drawer__list">
+                  {appNav.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <li key={item.to}>
+                        <NavLink
+                          to={item.to}
+                          end={item.end}
+                          className={({ isActive }) => `drawer__link ${isActive ? 'is-active' : ''}`}
+                        >
+                          {Icon ? <Icon size={18} aria-hidden="true" /> : null}
+                          {item.label}
+                        </NavLink>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </>
+            ) : (
+              <ul className="drawer__list">
+                {appNav.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <li key={item.to}>
+                      <NavLink
+                        to={item.to}
+                        end={item.end}
+                        className={({ isActive }) => `drawer__link ${isActive ? 'is-active' : ''}`}
+                      >
+                        {Icon ? <Icon size={18} aria-hidden="true" /> : null}
+                        {item.label}
+                      </NavLink>
+                    </li>
                   );
-                }
-                return (
-                  <li key={item.to}>
-                    <NavLink
-                      to={item.to}
-                      end={item.end}
-                      className={({ isActive }) => `drawer__link ${isActive ? 'is-active' : ''}`}
-                    >
-                      {Icon ? <Icon size={18} aria-hidden="true" /> : null}
-                      {item.label}
-                    </NavLink>
-                  </li>
-                );
-              })}
-            </ul>
+                })}
+              </ul>
+            )}
 
             <div className="drawer__footer">
               {!isAuthenticated ? (
@@ -163,8 +190,10 @@ export function SiteHeader({ variant = 'app' }) {
               )}
             </div>
           </nav>
-        </div>
-      ) : null}
+            </div>,
+            document.body
+          )
+        : null}
     </header>
   );
 }

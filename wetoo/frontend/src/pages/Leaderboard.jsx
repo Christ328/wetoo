@@ -20,20 +20,24 @@ import { PageHeader } from '../components/layout/PageHeader.jsx';
 import { LoadingState, ErrorState, EmptyState } from '../components/ui/States.jsx';
 import { useApi } from '../lib/useApi.js';
 import { useAuth } from '../context/AuthContext.jsx';
+import { useLang } from '../context/LangContext.jsx';
 import { levelName } from '../lib/format.js';
 import './Leaderboard.css';
 
 /** Comment on gagne des points (règle affichée aux utilisateurs). */
-const POINT_RULES = [
-  { icon: BookOpen, label: 'Terminer une leçon', value: '+10 pts' },
-  { icon: Sparkles, label: 'Réussir un quiz', value: '+15 pts' },
-  { icon: MessageSquare, label: 'Publier ou répondre', value: '+5 pts' },
-  { icon: Heart, label: 'Réagir à une discussion', value: '+2 pts' },
-  { icon: Flame, label: 'Revenir plusieurs jours de suite', value: '+ bonus' },
-];
+function getPointRules(t) {
+  return [
+    { icon: BookOpen, label: t('leaderboard.ruleLesson'), value: t('leaderboard.ruleLessonVal') },
+    { icon: Sparkles, label: t('leaderboard.ruleQuiz'), value: t('leaderboard.ruleQuizVal') },
+    { icon: MessageSquare, label: t('leaderboard.rulePost'), value: t('leaderboard.rulePostVal') },
+    { icon: Heart, label: t('leaderboard.ruleReact'), value: t('leaderboard.ruleReactVal') },
+    { icon: Flame, label: t('leaderboard.ruleStreak'), value: t('leaderboard.ruleStreakVal') },
+  ];
+}
 
 /** Petite ligne de classement (à partir de la 4e place). */
 function RankRow({ entry }) {
+  const { t, lang } = useLang();
   return (
     <li
       className={`leaderboard-page__row ${entry.isMe ? 'is-me' : ''}`}
@@ -44,12 +48,12 @@ function RankRow({ entry }) {
       <span className="leaderboard-page__row-name">
         {entry.name}
         {entry.isMe ? (
-          <span className="leaderboard-page__you" aria-label="C'est toi">
-            toi
+          <span className="leaderboard-page__you" aria-label={t('leaderboard.itsYou')}>
+            {t('leaderboard.you')}
           </span>
         ) : null}
       </span>
-      <span className="leaderboard-page__row-level">{levelName(entry.level)}</span>
+      <span className="leaderboard-page__row-level">{levelName(entry.level, lang)}</span>
       <span className="leaderboard-page__row-points">
         <strong>{entry.points}</strong>
         <span>pts</span>
@@ -60,6 +64,7 @@ function RankRow({ entry }) {
 
 /** Bloc du podium (top 3). */
 function PodiumBlock({ entry, place }) {
+  const { t, lang } = useLang();
   const placeLabel = `#${entry.rank}`;
   return (
     <div
@@ -74,13 +79,13 @@ function PodiumBlock({ entry, place }) {
       <Avatar name={entry.name} avatar={entry.avatar} size="xl" />
       <span className="leaderboard-page__podium-rank">{placeLabel}</span>
       <span className="leaderboard-page__podium-name">{entry.name}</span>
-      <span className="leaderboard-page__podium-level">{levelName(entry.level)}</span>
+      <span className="leaderboard-page__podium-level">{levelName(entry.level, lang)}</span>
       <span className="leaderboard-page__podium-points">
         <strong>{entry.points}</strong> pts
       </span>
       {entry.isMe ? (
         <Badge tone="primary" size="sm">
-          C'est toi
+          {t('leaderboard.itsYou')}
         </Badge>
       ) : null}
     </div>
@@ -89,6 +94,8 @@ function PodiumBlock({ entry, place }) {
 
 export default function Leaderboard() {
   const { isAuthenticated } = useAuth();
+  const { t, lang } = useLang();
+  const pointRules = getPointRules(t);
 
   // Le classement est public, mais l'en-tête d'autorisation permet d'identifier « moi ».
   const { data, loading, error, refetch } = useApi('/gamification/leaderboard', {
@@ -111,9 +118,9 @@ export default function Leaderboard() {
   return (
     <div className="leaderboard-page">
       <PageHeader
-        eyebrow="Communauté"
-        title="Classement"
-        description="Les membres les plus actifs de WeToo. Gagne des points en apprenant et en participant !"
+        eyebrow={t('nav.community')}
+        title={t('leaderboard.title')}
+        description={t('leaderboard.desc')}
         icon={Trophy}
       />
 
@@ -122,36 +129,34 @@ export default function Leaderboard() {
         <Card tone="soft" padding="md" className="leaderboard-page__note">
           <div className="leaderboard-page__note-body">
             <LogIn size={22} aria-hidden="true" />
-            <p>
-              Connecte-toi pour voir ta propre position et grimper dans le classement.
-            </p>
+            <p>{t('leaderboard.notAuthNote')}</p>
           </div>
           <Button to="/connexion" size="sm" icon={LogIn}>
-            Se connecter
+            {t('header.signIn')}
           </Button>
         </Card>
       ) : null}
 
       {/* États de chargement / erreur / vide. */}
       {loading ? (
-        <LoadingState label="Chargement du classement…" />
+        <LoadingState label={t('leaderboard.loading')} />
       ) : error ? (
         <ErrorState error={error} onRetry={refetch} />
       ) : entries.length === 0 ? (
         <EmptyState
           icon={Trophy}
-          title="Le classement est vide pour l'instant"
-          description="Sois le premier à gagner des points en terminant une leçon ou en participant."
+          title={t('leaderboard.emptyTitle')}
+          description={t('leaderboard.emptyDesc')}
           action={
             <Button to="/app/apprendre" icon={BookOpen}>
-              Commencer à apprendre
+              {t('leaderboard.startLearning')}
             </Button>
           }
         />
       ) : (
         <>
           {/* ------------------------------- Podium ------------------------------- */}
-          <section className="leaderboard-page__podium" aria-label="Podium des trois premiers">
+          <section className="leaderboard-page__podium" aria-label={t('leaderboard.podiumAria')}>
             {podiumOrder.map(({ entry, place }) => (
               <PodiumBlock key={entry.rank} entry={entry} place={place} />
             ))}
@@ -163,8 +168,8 @@ export default function Leaderboard() {
               <span className="leaderboard-page__me-rank">#{meNotListed.rank}</span>
               <Avatar name={meNotListed.name} avatar={meNotListed.avatar} size="md" />
               <div className="leaderboard-page__me-info">
-                <strong>Ta position</strong>
-                <span className="text-muted">{levelName(meNotListed.level)}</span>
+                <strong>{t('leaderboard.myPosition')}</strong>
+                <span className="text-muted">{levelName(meNotListed.level, lang)}</span>
               </div>
               <span className="leaderboard-page__me-points">
                 <strong>{meNotListed.points}</strong> pts
@@ -190,15 +195,12 @@ export default function Leaderboard() {
                 <Star size={20} />
               </span>
               <div>
-                <h2 className="leaderboard-page__points-title">Comment gagner des points ?</h2>
-                <p className="text-muted">
-                  Chaque action utile à la communauté te fait progresser. Les points servent
-                  uniquement à débloquer ton niveau et des badges - jamais à te comparer négativement.
-                </p>
+                <h2 className="leaderboard-page__points-title">{t('leaderboard.howToTitle')}</h2>
+                <p className="text-muted">{t('leaderboard.howToDesc')}</p>
               </div>
             </div>
             <ul className="leaderboard-page__points-list">
-              {POINT_RULES.map((rule) => (
+              {pointRules.map((rule) => (
                 <li key={rule.label} className="leaderboard-page__points-item">
                   <span className="leaderboard-page__points-icon" aria-hidden="true">
                     <rule.icon size={18} />
@@ -210,15 +212,14 @@ export default function Leaderboard() {
             </ul>
             <div className="leaderboard-page__points-cta">
               <Button to="/app/apprendre" variant="soft" size="sm" icon={BookOpen}>
-                Gagner mes premiers points
+                {t('leaderboard.firstPoints')}
               </Button>
             </div>
           </Card>
 
           {/* Lien doux vers les ressources si la comparaison pèse. */}
           <p className="leaderboard-page__footnote text-muted">
-            Besoin d'en parler ?{' '}
-            <Link to="/app/ressources">Retrouve un soutien et des ressources ici</Link>.
+            <Link to="/app/ressources">{t('leaderboard.footnote')}</Link>
           </p>
         </>
       )}

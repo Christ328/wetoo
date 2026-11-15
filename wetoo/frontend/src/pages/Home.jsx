@@ -28,40 +28,43 @@ import { SectionHeading } from '../components/ui/SectionHeading.jsx';
 import { LoadingState, ErrorState, EmptyState } from '../components/ui/States.jsx';
 import { useApi } from '../lib/useApi.js';
 import { useAuth } from '../context/AuthContext.jsx';
+import { useLang } from '../context/LangContext.jsx';
 import { timeAgo } from '../lib/format.js';
 import './Home.css';
 
 /** Raccourcis vers les grands modules de la plateforme. */
-const QUICK_ACTIONS = [
-  {
-    to: '/app/chat',
-    icon: MessageCircle,
-    tone: 'primary',
-    title: 'Poser une question',
-    text: 'Le chatbot répond 24 h/24, en anonyme.',
-  },
-  {
-    to: '/app/apprendre',
-    icon: GraduationCap,
-    tone: 'accent',
-    title: 'Apprendre',
-    text: 'Des cours courts et des quiz pour progresser.',
-  },
-  {
-    to: '/app/communaute',
-    icon: Users,
-    tone: 'warm',
-    title: 'Communauté',
-    text: 'Le forum bienveillant et modéré des jeunes.',
-  },
-  {
-    to: '/app/expertes',
-    icon: Stethoscope,
-    tone: 'info',
-    title: 'Professionnel·les',
-    text: 'Sage-femme, psy, infirmier·e : en toute confiance.',
-  },
-];
+function getQuickActions(t) {
+  return [
+    {
+      to: '/app/chat',
+      icon: MessageCircle,
+      tone: 'primary',
+      title: t('quickActions.chatTitle'),
+      text: t('quickActions.chatText'),
+    },
+    {
+      to: '/app/apprendre',
+      icon: GraduationCap,
+      tone: 'accent',
+      title: t('quickActions.learnTitle'),
+      text: t('quickActions.learnText'),
+    },
+    {
+      to: '/app/communaute',
+      icon: Users,
+      tone: 'warm',
+      title: t('quickActions.communityTitle'),
+      text: t('quickActions.communityText'),
+    },
+    {
+      to: '/app/expertes',
+      icon: Stethoscope,
+      tone: 'info',
+      title: t('quickActions.expertsTitle'),
+      text: t('quickActions.expertsText'),
+    },
+  ];
+}
 
 /** Petite tuile de statistique (points, série, rang…). */
 function Stat({ icon: Icon, value, label, tone = 'primary' }) {
@@ -78,22 +81,24 @@ function Stat({ icon: Icon, value, label, tone = 'primary' }) {
 
 export default function Home() {
   const { user, isAuthenticated } = useAuth();
+  const { t, lang } = useLang();
+  const quickActions = getQuickActions(t);
 
   // Données personnelles (uniquement si connecté).
   const { data: gamify } = useApi(isAuthenticated ? '/gamification/me' : null, { auth: true });
 
   // Données publiques du tableau de bord.
-  const lessons = useApi('/learn/lessons', { auth: false, cache: true });
-  const campaigns = useApi('/campaigns', { auth: false, cache: true });
-  const myths = useApi('/chat/myths', { auth: false, cache: true });
-  const posts = useApi('/community/posts?sort=recent', { auth: false, cache: true });
+  const lessons = useApi('/learn/lessons');
+  const campaigns = useApi('/campaigns');
+  const myths = useApi('/chat/myths');
+  const posts = useApi('/community/posts?sort=recent');
 
   // Index du mythe affiché (départ varié selon le jour).
   const dayIndex = Math.floor(Date.now() / 86400000);
   const [mythStep, setMythStep] = useState(0);
 
   const points = gamify?.points ?? user?.points ?? 0;
-  const levelName = gamify?.levelName ?? user?.levelName ?? 'Débutant·e';
+  const levelName = gamify?.levelName ?? user?.levelName ?? t('learn.levelBeginner');
   const level = gamify?.level ?? user?.level ?? 1;
   const progressPct = gamify?.progressPct ?? user?.progressPct ?? 0;
   const streak = gamify?.streak ?? user?.streak ?? 0;
@@ -121,32 +126,30 @@ export default function Home() {
         <Card tone="soft" padding="lg" className="home-page__level-card animate-up">
           <div className="home-page__level-ring">
             <ProgressRing value={progressPct} max={100} size={124} stroke={10}>
-              <span className="home-page__ring-level">Niv. {level}</span>
+              <span className="home-page__ring-level">{t('learn.levelPrefix')}{level}</span>
               <span className="home-page__ring-name">{levelName}</span>
             </ProgressRing>
           </div>
           <div className="home-page__level-body">
-            <p className="eyebrow">Ton tableau de bord</p>
+            <p className="eyebrow">{t('home.dashboardEyebrow')}</p>
             <h1 className="home-page__hello">
-              Bonjour {user?.name} <span aria-hidden="true">👋</span>
+              {t('home.hello')(user?.name)} <span aria-hidden="true">👋</span>
             </h1>
             <p className="home-page__level-text">
-              {progressPct > 0
-                ? `Tu progresses bien : encore un effort pour atteindre le niveau suivant !`
-                : `Commence une leçon pour gagner tes premiers points et débloquer des badges.`}
+              {progressPct > 0 ? t('home.progressGood') : t('home.progressStart')}
             </p>
             <div className="home-page__stats">
-              <Stat icon={Star} value={points} label="points" tone="primary" />
-              <Stat icon={Flame} value={streak} label="jours de série" tone="warm" />
-              <Stat icon={Trophy} value={rank ? `#${rank}` : '—'} label="au classement" tone="accent" />
-              <Stat icon={BookOpen} value={lessonsCount} label="cours terminés" tone="info" />
+              <Stat icon={Star} value={points} label={t('home.statPoints')} tone="primary" />
+              <Stat icon={Flame} value={streak} label={t('home.statStreak')} tone="warm" />
+              <Stat icon={Trophy} value={rank ? `#${rank}` : '—'} label={t('home.statRank')} tone="accent" />
+              <Stat icon={BookOpen} value={lessonsCount} label={t('home.statLessons')} tone="info" />
             </div>
             <div className="home-page__level-actions">
               <Button to="/app/classement" variant="outline" size="sm" icon={Trophy}>
-                Voir le classement
+                {t('home.seeLeaderboard')}
               </Button>
               <Button to="/app/profil" variant="ghost" size="sm">
-                Mon profil
+                {t('home.myProfile')}
               </Button>
             </div>
           </div>
@@ -154,21 +157,18 @@ export default function Home() {
       ) : (
         <Card tone="soft" padding="lg" className="home-page__welcome animate-up">
           <Badge tone="primary" icon={Sparkles}>
-            Bienvenue sur WeToo
+            {t('home.welcomeBadge')}
           </Badge>
           <h1 className="home-page__welcome-title">
-            Un espace sûr pour parler de <span className="gradient-text">santé et de bien-être</span>.
+            {t('home.welcomeTitle1')}<span className="gradient-text">{t('home.welcomeTitle2')}</span>{t('home.welcomeTitle3')}
           </h1>
-          <p className="lead">
-            Pose tes questions sans tabou, apprends à ton rythme et échange avec d'autres jeunes - en
-            anonyme si tu le souhaites.
-          </p>
+          <p className="lead">{t('home.welcomeLead')}</p>
           <div className="home-page__welcome-actions">
             <Button to="/inscription" size="lg" icon={ArrowRight}>
-              Créer un compte
+              {t('home.welcomeCreate')}
             </Button>
             <Button to="/app/chat" variant="outline" size="lg" icon={MessageCircle}>
-              Poser une question anonymement
+              {t('home.welcomeAskAnon')}
             </Button>
           </div>
         </Card>
@@ -176,9 +176,9 @@ export default function Home() {
 
       {/* ============================ Actions rapides ============================ */}
       <section className="home-page__section">
-        <SectionHeading eyebrow="Actions rapides" title="Par où veux-tu commencer ?" as="h2" />
+        <SectionHeading eyebrow={t('home.quickEyebrow')} title={t('home.quickTitle')} as="h2" />
         <div className="grid grid-4 home-page__quick stagger">
-          {QUICK_ACTIONS.map((action) => {
+          {quickActions.map((action) => {
             const Icon = action.icon;
             return (
               <Link key={action.to} to={action.to} className="home-page__tile">
@@ -196,21 +196,21 @@ export default function Home() {
       {/* ====================== Reprendre l'apprentissage ====================== */}
       <section className="home-page__section">
         <SectionHeading
-          eyebrow="Apprentissage"
-          title="Reprendre l'apprentissage"
-          description={isAuthenticated ? 'Reprends là où tu t’es arrêté·e.' : 'Quelques cours pour découvrir.'}
+          eyebrow={t('home.learnEyebrow')}
+          title={t('home.learnTitle')}
+          description={isAuthenticated ? t('home.learnDescAuth') : t('home.learnDescAnon')}
           as="h2"
         />
         <div>
           {lessons.loading ? (
-            <LoadingState label="Chargement des cours…" />
+            <LoadingState label={t('home.loadingLessons')} />
           ) : lessons.error ? (
             <ErrorState error={lessons.error} onRetry={lessons.refetch} />
           ) : resumeList.length === 0 ? (
             <EmptyState
               icon={BookMarked}
-              title="Aucun cours disponible"
-              description="Reviens bientôt, de nouveaux contenus arrivent."
+              title={t('home.noLessonsTitle')}
+              description={t('home.noLessonsDesc')}
             />
           ) : (
             <div className="grid grid-3 home-page__lessons">
@@ -228,7 +228,7 @@ export default function Home() {
                   <p className="home-page__lesson-summary clamp-2">{lesson.summary}</p>
                   <div className="meta-row home-page__lesson-meta">
                     <span className="meta-item">
-                      <Clock size={14} aria-hidden="true" /> {lesson.durationMin} min
+                      <Clock size={14} aria-hidden="true" /> {lesson.durationMin} {t('common.min')}
                     </span>
                     <span className="meta-item">
                       <Star size={14} aria-hidden="true" /> {lesson.points} pts
@@ -243,17 +243,17 @@ export default function Home() {
 
       {/* ========================= Campagne du mois ========================= */}
       <section className="home-page__section">
-        <SectionHeading eyebrow="Engagement" title="La campagne du mois" as="h2" />
+        <SectionHeading eyebrow={t('home.campaignEyebrow')} title={t('home.campaignTitle')} as="h2" />
         <div>
           {campaigns.loading ? (
-            <LoadingState label="Chargement de la campagne…" />
+            <LoadingState label={t('home.loadingCampaign')} />
           ) : campaigns.error ? (
             <ErrorState error={campaigns.error} onRetry={campaigns.refetch} />
           ) : !campaign ? (
             <EmptyState
               icon={Megaphone}
-              title="Pas de campagne en cours"
-              description="Une nouvelle campagne thématique arrive chaque mois."
+              title={t('home.noCampaignTitle')}
+              description={t('home.noCampaignDesc')}
             />
           ) : (
             <Card tone="accent" padding="lg" className="home-page__campaign">
@@ -281,10 +281,10 @@ export default function Home() {
               <div className="home-page__campaign-side">
                 <div className="home-page__campaign-count">
                   <strong>{campaign.participants}</strong>
-                  <span>participant·es</span>
+                  <span>{t('home.participants')}</span>
                 </div>
                 <Button to={`/app/campagnes/${campaign.id}`} variant="accent" iconRight={ArrowRight}>
-                  Voir la campagne
+                  {t('home.seeCampaign')}
                 </Button>
               </div>
             </Card>
@@ -296,14 +296,14 @@ export default function Home() {
       <div className="home-page__split">
         {/* Mythe du jour */}
         <section className="home-page__section">
-          <SectionHeading eyebrow="Vraies infos" title="Le mythe du jour" as="h2" />
+          <SectionHeading eyebrow={t('home.mythEyebrow')} title={t('home.mythTitle')} as="h2" />
           <div>
             {myths.loading ? (
-              <LoadingState label="Chargement des mythes…" />
+              <LoadingState label={t('home.loadingMyths')} />
             ) : myths.error ? (
               <ErrorState error={myths.error} onRetry={myths.refetch} />
             ) : !currentMyth ? (
-              <EmptyState icon={Sparkles} title="Aucun mythe pour l'instant" />
+              <EmptyState icon={Sparkles} title={t('home.noMythTitle')} />
             ) : (
               <Card padding="lg" className="home-page__myth">
                 <span className="home-page__myth-mark" aria-hidden="true">
@@ -314,18 +314,18 @@ export default function Home() {
                 </Badge>
                 <p className="home-page__myth-statement">« {currentMyth.myth} »</p>
                 <div className="home-page__myth-truth">
-                  <strong>La vérité</strong>
+                  <strong>{t('home.mythTruth')}</strong>
                   <p>{currentMyth.truth}</p>
                 </div>
                 <div className="home-page__myth-footer">
-                  <span className="text-subtle">Source : {currentMyth.source}</span>
+                  <span className="text-subtle">{t('home.mythSource')(currentMyth.source)}</span>
                   <Button
                     variant="outline"
                     size="sm"
                     icon={RefreshCw}
                     onClick={() => setMythStep((s) => s + 1)}
                   >
-                    Un autre mythe
+                    {t('home.anotherMyth')}
                   </Button>
                 </div>
               </Card>
@@ -336,21 +336,21 @@ export default function Home() {
         {/* Dernières discussions */}
         <section className="home-page__section">
           <SectionHeading
-            eyebrow="Communauté"
-            title="Dernières discussions"
+            eyebrow={t('home.postsEyebrow')}
+            title={t('home.postsTitle')}
             as="h2"
             className="home-page__posts-heading"
           />
           <div>
             {posts.loading ? (
-              <LoadingState label="Chargement des discussions…" />
+              <LoadingState label={t('home.loadingPosts')} />
             ) : posts.error ? (
               <ErrorState error={posts.error} onRetry={posts.refetch} />
             ) : recentPosts.length === 0 ? (
               <EmptyState
                 icon={MessageSquare}
-                title="Pas encore de discussion"
-                description="Sois la première personne à lancer un sujet."
+                title={t('home.noPostsTitle')}
+                description={t('home.noPostsDesc')}
               />
             ) : (
               <ul className="home-page__posts">
@@ -361,8 +361,7 @@ export default function Home() {
                       <span className="home-page__post-body">
                         <strong className="clamp-1">{post.title}</strong>
                         <span className="home-page__post-meta">
-                          {post.author?.name} · {timeAgo(post.createdAt)} · {post.repliesCount} réponse
-                          {post.repliesCount > 1 ? 's' : ''}
+                          {post.author?.name} · {timeAgo(post.createdAt, lang)} · {t('home.postReplies')(post.repliesCount)}
                         </span>
                       </span>
                       <ArrowRight size={18} aria-hidden="true" className="home-page__post-arrow" />
@@ -373,7 +372,7 @@ export default function Home() {
             )}
             <div className="home-page__posts-more">
               <Button to="/app/communaute" variant="ghost" size="sm" iconRight={ArrowRight}>
-                Voir toutes les discussions
+                {t('home.seeAllPosts')}
               </Button>
             </div>
           </div>
@@ -388,12 +387,12 @@ export default function Home() {
           </span>
           <div className="home-page__help-text">
             <h2 className="home-page__help-title" id="home-help-title">
-              Tu ne vas pas bien ?
+              {t('home.helpTitle')}
             </h2>
-            <p>Parle à quelqu'un maintenant : lignes d'écoute, contacts d'urgence et ressources fiables.</p>
+            <p>{t('home.helpText')}</p>
           </div>
           <Button to="/app/ressources" variant="warm" iconRight={ArrowRight}>
-            Trouver de l'aide
+            {t('home.helpCta')}
           </Button>
         </Card>
       </section>

@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <defs>
+    <radialGradient id="bg2" cx="30%" cy="40%" r="90%">
+      <stop offset="0%" stop-color="#f0ebff"/>
+      <stop offset="100%" stop-color="#faf8ff"/>
+    </radialGradient>
+    <radialGradient id="gA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#9B6DFF" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#9B6DFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6C3FE8" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#6C3FE8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1280" height="720" fill="url(#bg2)"/>
+
+  <!-- glow blobs -->
+  <ellipse cx="1100" cy="180" rx="340" ry="240" fill="url(#gA)"/>
+  <ellipse cx="160" cy="580" rx="280" ry="200" fill="url(#gB)"/>
+  <ellipse cx="640" cy="360" rx="200" ry="150" fill="url(#gA)" opacity="0.35"/>
+
+  <!-- 4 pillar icons (abstract) representing chatbot, learning, community, whatsapp -->
+
+  <!-- chatbot bubble -->
+  <g opacity="0.09" fill="#6C3FE8">
+    <rect x="30" y="60" width="90" height="60" rx="14"/>
+    <polygon points="50,120 70,140 70,120"/>
+    <rect x="44" y="80" width="14" height="4" rx="2"/>
+    <rect x="44" y="92" width="50" height="4" rx="2"/>
+    <rect x="44" y="104" width="34" height="4" rx="2"/>
+  </g>
+
+  <!-- graduation cap (learning) -->
+  <g opacity="0.08" fill="#9B6DFF">
+    <polygon points="1180,60 1240,90 1180,120 1120,90"/>
+    <rect x="1210" y="90" width="6" height="30" rx="3"/>
+    <ellipse cx="1213" cy="122" rx="8" ry="5"/>
+    <rect x="1146" y="104" width="68" height="24" rx="8"/>
+  </g>
+
+  <!-- heart pulse (health) -->
+  <g opacity="0.08" stroke="#6C3FE8" stroke-width="3.5" fill="none">
+    <polyline points="20,380 60,380 80,340 100,420 120,360 140,380 180,380"/>
+  </g>
+
+  <!-- shield (protection) -->
+  <g opacity="0.07" fill="#C084FC">
+    <path d="M1220 560 L1260 580 L1260 630 Q1240 660 1220 670 Q1200 660 1200 630 L1200 580 Z"/>
+    <polyline points="1212,610 1222,622 1238,600" stroke="white" stroke-width="3" fill="none" opacity="0.6"/>
+  </g>
+
+  <!-- hexagonal pattern top-left (tech pattern) -->
+  <g opacity="0.055" stroke="#6C3FE8" stroke-width="1" fill="none">
+    <polygon points="80,160 108,144 136,160 136,192 108,208 80,192"/>
+    <polygon points="136,160 164,144 192,160 192,192 164,208 136,192"/>
+    <polygon points="108,208 136,192 164,208 164,240 136,256 108,240"/>
+    <polygon points="80,256 108,240 136,256 136,288 108,304 80,288"/>
+    <polygon points="136,256 164,240 192,256 192,288 164,304 136,288"/>
+  </g>
+
+  <!-- connecting lines with nodes (network/community) -->
+  <g opacity="0.1" stroke="#9B6DFF" stroke-width="1.2" fill="none">
+    <line x1="640" y1="680" x2="760" y2="650"/>
+    <line x1="760" y1="650" x2="880" y2="675"/>
+    <line x1="880" y1="675" x2="960" y2="650"/>
+    <line x1="480" y1="680" x2="640" y2="680"/>
+    <line x1="380" y1="655" x2="480" y2="680"/>
+  </g>
+  <g opacity="0.2" fill="#9B6DFF">
+    <circle cx="640" cy="680" r="4"/>
+    <circle cx="760" cy="650" r="4"/>
+    <circle cx="880" cy="675" r="4"/>
+    <circle cx="960" cy="650" r="4"/>
+    <circle cx="480" cy="680" r="4"/>
+    <circle cx="380" cy="655" r="4"/>
+  </g>
+
+  <!-- floating dots scattered -->
+  <circle cx="400" cy="50" r="5" fill="#6C3FE8" opacity="0.15"/>
+  <circle cx="460" cy="30" r="3" fill="#9B6DFF" opacity="0.2"/>
+  <circle cx="520" cy="60" r="4" fill="#C084FC" opacity="0.18"/>
+  <circle cx="820" cy="40" r="6" fill="#6C3FE8" opacity="0.12"/>
+  <circle cx="900" cy="20" r="4" fill="#9B6DFF" opacity="0.18"/>
+  <circle cx="1000" cy="50" r="5" fill="#6C3FE8" opacity="0.13"/>
+  <circle cx="240" cy="700" r="5" fill="#9B6DFF" opacity="0.15"/>
+  <circle cx="1060" cy="700" r="6" fill="#C084FC" opacity="0.12"/>
+
+  <!-- subtle arc representing reach/impact -->
+  <path d="M 0 680 Q 640 400 1280 680" stroke="#6C3FE8" stroke-width="1.5" fill="none" opacity="0.06"/>
+  <path d="M 0 700 Q 640 450 1280 700" stroke="#9B6DFF" stroke-width="1" fill="none" opacity="0.05"/>
+</svg>

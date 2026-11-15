@@ -31,6 +31,7 @@ import {
 import { useApi } from '../lib/useApi.js';
 import { api } from '../lib/api.js';
 import { useToast } from '../context/ToastContext.jsx';
+import { useLang } from '../context/LangContext.jsx';
 import './Chat.css';
 
 /* ----------------------------- Constantes locales ----------------------------- */
@@ -79,6 +80,7 @@ function phoneFromContact(contact = '') {
 /** Récupère le texte du dernier échange pour l'indicateur de contexte. */
 export default function Chat() {
   const toast = useToast();
+  const { t, lang } = useLang();
 
   /* --------------------------- Données distantes --------------------------- */
   const topicsApi = useApi('/chat/topics');
@@ -138,7 +140,7 @@ export default function Chat() {
       try {
         const res = await api.post(
           '/chat/message',
-          { message: text, sessionId: sessionId || undefined, lang: 'fr' },
+          { message: text, sessionId: sessionId || undefined, lang },
           { auth: true }
         );
         if (res?.sessionId) setSessionId(res.sessionId);
@@ -146,7 +148,7 @@ export default function Chat() {
         const botMessage = {
           id: uid(),
           role: 'bot',
-          text: reply.text || 'Je n’ai pas pu formuler de réponse. Reformule ta question, je reste là.',
+          text: reply.text || t('chat.botFallback'),
           at: new Date().toISOString(),
           reply,
         };
@@ -158,7 +160,7 @@ export default function Chat() {
         setSending(false);
       }
     },
-    [sending, sessionId]
+    [sending, sessionId, t]
   );
 
   /* --------------------------- Nouvelle conversation --------------------------- */
@@ -168,20 +170,20 @@ export default function Chat() {
     setActiveTopic(null);
     setNetworkError(false);
     setConfirmOpen(false);
-    toast.success('Nouvelle conversation démarrée.');
-  }, [toast]);
+    toast.success(t('chat.resetDone'));
+  }, [toast, t]);
 
   /* -------------------------------- Export -------------------------------- */
   const exportConversation = useCallback(() => {
     if (messages.length === 0) {
-      toast.info('La conversation est vide pour le moment.');
+      toast.info(t('chat.exportEmpty'));
       return;
     }
     const lines = messages.map(
-      (m) => `${m.role === 'user' ? 'Moi' : BOT_NAME} : ${m.text}`
+      (m) => `${m.role === 'user' ? t('chat.exportMe') : BOT_NAME} : ${m.text}`
     );
     const content = [
-      'Conversation WeToo',
+      t('chat.exportHeader'),
       new Date().toLocaleString('fr-FR'),
       '',
       ...lines,
@@ -193,8 +195,8 @@ export default function Chat() {
     link.download = 'wetoo-conversation.txt';
     link.click();
     URL.revokeObjectURL(url);
-    toast.success('Conversation exportée.');
-  }, [messages, toast]);
+    toast.success(t('chat.exportDone'));
+  }, [messages, toast, t]);
 
   /* ----------------------------- Données dérivées ----------------------------- */
   const callableHelplines = useMemo(() => {
@@ -205,23 +207,23 @@ export default function Chat() {
   }, [helplines]);
 
   const isEmpty = messages.length === 0;
-  const activeTopicObj = topics.find((t) => t.id === activeTopic) || null;
+  const activeTopicObj = topics.find((topic) => topic.id === activeTopic) || null;
 
   /* --------------------------------- Rendu --------------------------------- */
   return (
     <div className="chat-page">
       <PageHeader
-        eyebrow="Espace confidentiel"
-        title="Chat avec WeToo"
-        description="Pose tes questions en toute confidentialité. Réponses claires, sans jugement, à toute heure."
+        eyebrow={t('chat.eyebrow')}
+        title={t('chat.title')}
+        description={t('chat.desc')}
         icon={MessageCircle}
         actions={
           <>
             <Button variant="outline" icon={Download} onClick={exportConversation}>
-              Exporter
+              {t('chat.export')}
             </Button>
             <Button variant="soft" icon={RotateCcw} onClick={() => setConfirmOpen(true)}>
-              Nouvelle conversation
+              {t('chat.newConvo')}
             </Button>
           </>
         }
@@ -229,14 +231,14 @@ export default function Chat() {
 
       <div className="chat-page__layout">
         {/* ------------------------- Colonne de conversation ------------------------- */}
-        <section className="chat-page__main" aria-label="Conversation">
+        <section className="chat-page__main" aria-label={t('chat.convoAria')}>
           <div className="chat-page__panel">
             <div
               className="chat-page__scroll"
               ref={scrollRef}
               role="log"
               aria-live="polite"
-              aria-label="Messages de la conversation"
+              aria-label={t('chat.messagesAria')}
             >
               {isEmpty ? (
                 <WelcomeScreen
@@ -285,7 +287,7 @@ export default function Chat() {
                           <span />
                           <span />
                         </span>
-                        <span className="sr-only">WeToo est en train d’écrire…</span>
+                        <span className="sr-only">{t('chat.typingAria')}</span>
                       </div>
                     </li>
                   ) : null}
@@ -304,18 +306,18 @@ export default function Chat() {
               {networkError ? (
                 <p className="chat-page__offline" role="status">
                   <AlertTriangle size={15} aria-hidden="true" />
-                  Pas de connexion - réessaie.
+                  {t('chat.noConnection')}
                 </p>
               ) : null}
               <div className="chat-page__composer-row">
                 <label className="sr-only" htmlFor="chat-input">
-                  Écris ton message
+                  {t('chat.inputLabel')}
                 </label>
                 <textarea
                   id="chat-input"
                   ref={textareaRef}
                   className="chat-page__input"
-                  placeholder="Écris ta question…"
+                  placeholder={t('chat.inputPlaceholder')}
                   rows={1}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
@@ -330,21 +332,21 @@ export default function Chat() {
                 <button
                   type="submit"
                   className="chat-page__send"
-                  aria-label="Envoyer"
+                  aria-label={t('chat.sendLabel')}
                   disabled={!input.trim() || sending}
                 >
                   <Send size={20} aria-hidden="true" />
                 </button>
               </div>
               <p id="chat-input-hint" className="chat-page__hint">
-                Entrée pour envoyer • Maj + Entrée pour un retour à la ligne
+                {t('chat.inputHint')}
               </p>
             </form>
           </div>
 
           <p className="chat-page__disclaimer">
             <Info size={15} aria-hidden="true" />
-            Ceci ne remplace pas un avis médical. En cas d’urgence, appelle le 112.
+            {t('chat.disclaimer')}
           </p>
         </section>
 
@@ -357,20 +359,20 @@ export default function Chat() {
           aria-controls="chat-aside"
         >
           <SlidersHorizontal size={17} aria-hidden="true" />
-          {asideOpen ? 'Masquer les thèmes' : 'Thèmes & repères'}
+          {asideOpen ? t('chat.hideThemes') : t('chat.showThemes')}
         </button>
 
         {/* ------------------------- Panneau latéral ------------------------- */}
         <aside
           id="chat-aside"
           className={`chat-page__aside ${asideOpen ? 'is-open' : ''}`}
-          aria-label="Thèmes et repères"
+          aria-label={t('chat.asideThemes')}
         >
           <Card tone="soft" padding="md" className="chat-page__aside-card">
             <div className="chat-page__aside-head">
               <span className="chat-page__aside-title">
                 <HeartHandshake size={18} aria-hidden="true" />
-                Thèmes
+                {t('chat.themesSideTitle')}
               </span>
             </div>
             {topicsApi.loading ? (
@@ -428,13 +430,13 @@ export default function Chat() {
             <div className="chat-page__reassurance">
               <ShieldCheck size={18} aria-hidden="true" />
               <p>
-                <strong>Anonyme • Sans jugement • 24 h/24</strong>
-                <span>Tu peux poser toutes tes questions, même les plus personnelles.</span>
+                <strong>{t('chat.asideAnon')}</strong>
+                <span>{t('chat.asideAnonSub')}</span>
               </p>
             </div>
             <div className="chat-page__aside-note">
               <BookOpen size={16} aria-hidden="true" />
-              Ceci ne remplace pas un avis médical.
+              {t('chat.asideNote')}
             </div>
             <Button
               to="/app/ressources"
@@ -444,7 +446,7 @@ export default function Chat() {
               icon={AlertTriangle}
               className="chat-page__aside-cta"
             >
-              Voir les numéros d’aide
+              {t('chat.asideCta')}
             </Button>
           </Card>
         </aside>
@@ -454,23 +456,21 @@ export default function Chat() {
       <Modal
         open={confirmOpen}
         onClose={() => setConfirmOpen(false)}
-        title="Nouvelle conversation ?"
-        description="L’historique affiché sera effacé de cet appareil. Tu repartiras de zéro."
+        title={t('chat.confirmTitle')}
+        description={t('chat.confirmDesc')}
         size="sm"
         footer={
           <>
             <Button variant="ghost" onClick={() => setConfirmOpen(false)}>
-              Annuler
+              {t('chat.confirmCancel')}
             </Button>
             <Button variant="primary" icon={RotateCcw} onClick={resetConversation} data-autofocus>
-              Effacer et recommencer
+              {t('chat.confirmOk')}
             </Button>
           </>
         }
       >
-        <p className="text-muted">
-          Tes échanges précédents ne seront plus visibles ici. Cette action est immédiate.
-        </p>
+        <p className="text-muted">{t('chat.confirmNote')}</p>
       </Modal>
     </div>
   );
@@ -490,23 +490,22 @@ function WelcomeScreen({
   onSend,
   disabled,
 }) {
+  const { t } = useLang();
+
   return (
     <div className="chat-page__welcome">
       <div className="chat-page__welcome-head">
         <Avatar name={BOT_NAME} size="md" />
         <div>
-          <h2 className="chat-page__welcome-title">Bonjour, je suis WeToo.</h2>
-          <p className="chat-page__welcome-text">
-            Pose ta question librement : corps, contraception, IST, consentement, santé mentale…
-            Je réponds avec des informations fiables et sans jugement.
-          </p>
+          <h2 className="chat-page__welcome-title">{t('chat.welcomeTitle')}</h2>
+          <p className="chat-page__welcome-text">{t('chat.welcomeText')}</p>
         </div>
       </div>
 
       {/* Thèmes */}
       <div className="chat-page__block">
         <p className="chat-page__block-title">
-          <HeartHandshake size={16} aria-hidden="true" /> Explore un thème
+          <HeartHandshake size={16} aria-hidden="true" /> {t('chat.exploreTheme')}
         </p>
         {topicsLoading ? (
           <div className="chat-page__chips">
@@ -535,7 +534,7 @@ function WelcomeScreen({
       {activeTopicObj && Array.isArray(activeTopicObj.sampleQuestions) ? (
         <div className="chat-page__block">
           <p className="chat-page__block-title">
-            <MessageCircle size={16} aria-hidden="true" /> Questions sur « {activeTopicObj.label} »
+            <MessageCircle size={16} aria-hidden="true" /> {t('chat.topicQuestions')(activeTopicObj.label)}
           </p>
           <div className="chat-page__chips">
             {activeTopicObj.sampleQuestions.map((q) => (
@@ -550,7 +549,7 @@ function WelcomeScreen({
       {/* Questions suggérées */}
       <div className="chat-page__block">
         <p className="chat-page__block-title">
-          <MessageCircle size={16} aria-hidden="true" /> Questions fréquentes
+          <MessageCircle size={16} aria-hidden="true" /> {t('chat.suggestedTitle')}
         </p>
         {suggestionsLoading ? (
           <div className="chat-page__chips">
@@ -570,7 +569,7 @@ function WelcomeScreen({
       </div>
 
       <p className="chat-page__welcome-foot">
-        <Clock size={15} aria-hidden="true" /> Disponible à toute heure, en français.
+        <Clock size={15} aria-hidden="true" /> {t('chat.available')}
       </p>
     </div>
   );
@@ -578,6 +577,7 @@ function WelcomeScreen({
 
 /* ======================= Compléments sous une réponse bot ======================= */
 function BotExtras({ reply, helplines, onSend, disabled }) {
+  const { t } = useLang();
   const [sourcesOpen, setSourcesOpen] = useState(false);
   const sources = Array.isArray(reply.sources) ? reply.sources : [];
   const followUps = Array.isArray(reply.followUps) ? reply.followUps : [];
@@ -591,7 +591,7 @@ function BotExtras({ reply, helplines, onSend, disabled }) {
         <div className="chat-page__urgent" role="alert">
           <div className="chat-page__urgent-head">
             <AlertTriangle size={20} aria-hidden="true" />
-            <p>Tu n’es pas seul·e. De l’aide est disponible tout de suite.</p>
+            <p>{t('chat.urgentMsg')}</p>
           </div>
           {resources.length > 0 ? (
             <ul className="chat-page__urgent-resources">
@@ -605,7 +605,7 @@ function BotExtras({ reply, helplines, onSend, disabled }) {
               <a key={h.phone + h.name} className="chat-page__call" href={`tel:${h.phone}`}>
                 <Phone size={18} aria-hidden="true" />
                 <span className="chat-page__call-text">
-                  <span className="chat-page__call-number">Appeler le {h.phone}</span>
+                  <span className="chat-page__call-number">{t('chat.callBtn')(h.phone)}</span>
                   <span className="chat-page__call-name">{h.name}</span>
                 </span>
               </a>
@@ -635,7 +635,7 @@ function BotExtras({ reply, helplines, onSend, disabled }) {
             onClick={() => setSourcesOpen((v) => !v)}
           >
             <BookOpen size={15} aria-hidden="true" />
-            Sources ({sources.length})
+            {t('chat.sourcesLabel')(sources.length)}
             {sourcesOpen ? (
               <ChevronDown size={15} aria-hidden="true" />
             ) : (

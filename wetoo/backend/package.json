@@ -1,0 +1,29 @@
+{
+  "name": "wetoo-backend",
+  "version": "1.0.0",
+  "description": "Backend API de WeToo, plateforme communautaire de santé sexuelle et de bien-être pour les jeunes au Bénin (YTH Live Global Innovation Challenge 2026).",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js"
+  },
+  "keywords": [
+    "wetoo",
+    "sante",
+    "jeunesse",
+    "benin",
+    "api"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

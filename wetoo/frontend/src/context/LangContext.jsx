@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { fr } from '../i18n/fr.js';
 import { en } from '../i18n/en.js';
 
@@ -6,8 +6,6 @@ const CATALOGUES = { fr, en };
 const LangContext = createContext(null);
 
 function getInitialLang() {
-  const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('wetoo-lang') : null;
-  if (stored === 'fr' || stored === 'en') return stored;
   if (typeof navigator === 'undefined') return 'fr';
   const navLang = navigator.language?.slice(0, 2).toLowerCase();
   return navLang === 'en' ? 'en' : 'fr';
@@ -18,16 +16,16 @@ export function LangProvider({ children }) {
 
   const setLang = useCallback((l) => {
     setLangState(l);
-    try { localStorage.setItem('wetoo-lang', l); } catch { /* ignore */ }
   }, []);
 
   const toggleLang = useCallback(() => {
-    setLangState((l) => {
-      const next = l === 'fr' ? 'en' : 'fr';
-      try { localStorage.setItem('wetoo-lang', next); } catch { /* ignore */ }
-      return next;
-    });
+    setLangState((l) => (l === 'fr' ? 'en' : 'fr'));
   }, []);
+
+  // Garde l'attribut `lang` du document synchronisé (accessibilité / SEO).
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   /**
    * t(key) - looks up a dot-notation key like 'chat.title'.
