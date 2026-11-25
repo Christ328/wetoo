@@ -5,7 +5,6 @@ import { Menu, X } from 'lucide-react';
 import { Logo } from '../brand/Logo.jsx';
 import { Button, IconButton } from '../ui/Button.jsx';
 import { ThemeToggle } from './ThemeToggle.jsx';
-import { LangToggle } from './LangToggle.jsx';
 import { UserMenu } from './UserMenu.jsx';
 import { getAppNav, getMarketingNav } from './nav.js';
 import { useAuth } from '../../context/AuthContext.jsx';
@@ -76,7 +75,6 @@ export function SiteHeader({ variant = 'app' }) {
 
         <div className="site-header__actions">
           <ThemeToggle />
-          <LangToggle />
 
           {!loading &&
             (isAuthenticated ? (

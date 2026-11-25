@@ -53,7 +53,6 @@ export function SiteFooter({ compact = false }) {
       </div>
 
       <div className="site-footer__bottom">
-        <p>{t('footer.bottomNote')}</p>
         <p>{t('footer.disclaimer')}</p>
       </div>
     </footer>

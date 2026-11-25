@@ -592,7 +592,7 @@ export const fr = {
     ageNoteTitle:   'Pourquoi te demander ton âge ?',
     ageNoteBody1:   'L\'espace WeToo est réservé aux ',
     ageNoteStrong:  '18-29 ans',
-    ageNoteBody2:   ', une exigence du défi YTH Live. Ton âge sert uniquement à vérifier ton éligibilité : il reste',
+    ageNoteBody2:   '. Ton âge sert uniquement à vérifier ton éligibilité : il reste',
     ageNoteConf:    ' confidentiel',
     ageNoteBody3:   ' et n\'est jamais partagé publiquement.',
     reassure:       'Espace anonyme et sécurisé · tes données restent privées.',

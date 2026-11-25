@@ -294,9 +294,6 @@ export default function Landing() {
       <section className="hero">
         <div className="container hero__grid">
           <div className="hero__text stagger">
-            <Badge tone="primary" icon={Sparkles}>
-              {t('landing.badge')}
-            </Badge>
             <h1 className="hero__title">
               {t('landing.heroTitle1')}
               <br />
